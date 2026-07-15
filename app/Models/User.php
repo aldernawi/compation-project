@@ -58,4 +58,12 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->hasMany(Competition::class, 'organizer_id');
     }
+
+    /**
+     * @return HasMany<Submission, $this>
+     */
+    public function submissions(): HasMany
+    {
+        return $this->hasMany(Submission::class, 'participant_id');
+    }
 }
