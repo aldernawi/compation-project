@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes/organizer';
 import { create, edit, index } from '@/routes/organizer/competitions';
+import { index as submissionsIndex } from '@/routes/organizer/competitions/submissions';
 import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 
 type OrganizerCompetition = {
@@ -36,9 +37,14 @@ export default function CompetitionsIndex({ competitions }: { competitions: Lara
                         {
                             header: 'Actions',
                             cell: (c: OrganizerCompetition) => (
-                                <Link href={edit({ competition: c.id })} className="text-sm underline">
-                                    Edit
-                                </Link>
+                                <div className="flex gap-2">
+                                    <Link href={edit({ competition: c.id })} className="text-sm underline">
+                                        Edit
+                                    </Link>
+                                    <Link href={submissionsIndex({ competition: c.id })} className="text-sm underline">
+                                        Submissions
+                                    </Link>
+                                </div>
                             ),
                         },
                     ]}
