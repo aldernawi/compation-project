@@ -18,7 +18,7 @@ class SubmissionController extends Controller
     public function myIndex(Request $request): AnonymousResourceCollection
     {
         return SubmissionResource::collection(
-            $request->user()->submissions()->latest()->paginate(15)
+            $request->user()->submissions()->with('competition')->latest()->paginate(15)
         );
     }
 

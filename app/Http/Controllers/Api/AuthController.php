@@ -17,19 +17,21 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone_number' => ['required', 'string', 'max:32'],
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'phone_number' => $validated['phone_number'],
             'password' => Hash::make($validated['password']),
             'role' => Role::Participant,
         ]);
 
         return response()->json([
             'token' => $user->createToken('flutter-app')->plainTextToken,
-            'user' => $user->only(['id', 'name', 'email', 'role']),
+            'user' => $user->only(['id', 'name', 'email', 'phone_number', 'role']),
         ], 201);
     }
 

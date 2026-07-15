@@ -3,18 +3,29 @@
 use App\Enums\Role;
 use App\Models\User;
 
-it('registers a participant and returns a token', function () {
+it('registers a participant with a phone number and returns a token', function () {
     $response = $this->postJson('/api/register', [
         'name' => 'Jane Doe',
         'email' => 'jane@example.com',
+        'phone_number' => '+15551234567',
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
 
-    $response->assertCreated()->assertJsonStructure(['token', 'user' => ['id', 'name', 'email', 'role']]);
+    $response->assertCreated()->assertJsonStructure(['token', 'user' => ['id', 'name', 'email', 'phone_number', 'role']]);
 
     $user = User::where('email', 'jane@example.com')->firstOrFail();
-    expect($user->role)->toBe(Role::Participant);
+    expect($user->role)->toBe(Role::Participant)
+        ->and($user->phone_number)->toBe('+15551234567');
+});
+
+it('rejects registration missing a phone number', function () {
+    $this->postJson('/api/register', [
+        'name' => 'Jane Doe',
+        'email' => 'jane@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ])->assertUnprocessable();
 });
 
 it('logs a participant in and returns a token', function () {

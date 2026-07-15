@@ -26,4 +26,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/submissions/{submission}', [SubmissionController::class, 'update']);
 
     Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markRead']);
 });

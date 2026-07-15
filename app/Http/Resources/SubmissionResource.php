@@ -14,6 +14,8 @@ class SubmissionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $resultsPublished = $this->competition?->results_published_at !== null;
+
         return [
             'id' => $this->id,
             'competition_id' => $this->competition_id,
@@ -26,6 +28,28 @@ class SubmissionResource extends JsonResource
                 $this->status->value === 'evaluated' || $this->status->value === 'accepted',
                 fn () => $this->averageScore(),
             ),
+            'is_winner' => $resultsPublished && $this->prize_id !== null,
+            'rank' => $resultsPublished ? $this->rank() : null,
         ];
+    }
+
+    private function rank(): ?int
+    {
+        $scores = $this->competition->submissions()
+            ->get()
+            ->map(fn ($submission) => $submission->averageScore())
+            ->filter(fn ($score) => $score !== null)
+            ->sortByDesc(fn ($score) => $score)
+            ->values();
+
+        $ownScore = $this->averageScore();
+
+        if ($ownScore === null) {
+            return null;
+        }
+
+        $index = $scores->search($ownScore);
+
+        return $index === false ? null : (int) $index + 1;
     }
 }
