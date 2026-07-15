@@ -22,6 +22,7 @@ import { index as adminSubmissionsIndex } from '@/routes/admin/submissions';
 import { index as adminUsersIndex } from '@/routes/admin/users';
 import { dashboard as judgeDashboard } from '@/routes/judge';
 import { dashboard as organizerDashboard } from '@/routes/organizer';
+import { index as organizerCompetitionsIndex } from '@/routes/organizer/competitions';
 import type { NavItem, User } from '@/types';
 
 const adminNavItems: NavItem[] = [
@@ -33,7 +34,10 @@ const adminNavItems: NavItem[] = [
     { title: 'Reports', href: adminReportsIndex(), icon: BarChart3 },
 ];
 
-const organizerNavItems: NavItem[] = [{ title: 'Dashboard', href: organizerDashboard(), icon: LayoutGrid }];
+const organizerNavItems: NavItem[] = [
+    { title: 'Dashboard', href: organizerDashboard(), icon: LayoutGrid },
+    { title: 'My Competitions', href: organizerCompetitionsIndex(), icon: Trophy },
+];
 
 const judgeNavItems: NavItem[] = [{ title: 'Dashboard', href: judgeDashboard(), icon: LayoutGrid }];
 

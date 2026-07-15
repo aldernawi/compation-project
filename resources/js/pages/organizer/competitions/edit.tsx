@@ -1,0 +1,145 @@
+import { Form, Head } from '@inertiajs/react';
+import CompetitionController from '@/actions/App/Http/Controllers/Organizer/CompetitionController';
+import InputError from '@/components/input-error';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { dashboard } from '@/routes/organizer';
+import { index } from '@/routes/organizer/competitions';
+import type { BreadcrumbItem } from '@/types';
+
+type SelectOption = { id: number; name: string };
+
+type EditableCompetition = {
+    id: number;
+    competition_type_id: number;
+    title: string;
+    description: string | null;
+    terms: string | null;
+    starts_at: string;
+    ends_at: string;
+    requires_approval: boolean;
+    evaluation_method: string;
+};
+
+function toDatetimeLocal(value: string): string {
+    return value.slice(0, 16);
+}
+
+export default function EditCompetition({
+    competition,
+    competitionTypes,
+}: {
+    competition: EditableCompetition;
+    competitionTypes: SelectOption[];
+}) {
+    return (
+        <>
+            <Head title="Edit Competition" />
+            <div className="flex h-full flex-1 flex-col gap-4 p-4">
+                <h1 className="text-lg font-semibold">Edit Competition</h1>
+
+                <Form {...CompetitionController.update.form({ competition: competition.id })} className="max-w-xl space-y-6">
+                    {({ processing, errors }) => (
+                        <>
+                            <div className="grid gap-2">
+                                <Label htmlFor="title">Title</Label>
+                                <Input id="title" name="title" defaultValue={competition.title} required />
+                                <InputError message={errors.title} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="competition_type_id">Competition Type</Label>
+                                <select
+                                    id="competition_type_id"
+                                    name="competition_type_id"
+                                    required
+                                    defaultValue={competition.competition_type_id}
+                                    className="border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none md:text-sm"
+                                >
+                                    {competitionTypes.map((type) => (
+                                        <option key={type.id} value={type.id}>
+                                            {type.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <InputError message={errors.competition_type_id} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="description">Description</Label>
+                                <Input id="description" name="description" defaultValue={competition.description ?? ''} />
+                                <InputError message={errors.description} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="terms">Terms</Label>
+                                <Input id="terms" name="terms" defaultValue={competition.terms ?? ''} />
+                                <InputError message={errors.terms} />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="starts_at">Starts At</Label>
+                                    <Input
+                                        id="starts_at"
+                                        type="datetime-local"
+                                        name="starts_at"
+                                        defaultValue={toDatetimeLocal(competition.starts_at)}
+                                        required
+                                    />
+                                    <InputError message={errors.starts_at} />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="ends_at">Ends At</Label>
+                                    <Input
+                                        id="ends_at"
+                                        type="datetime-local"
+                                        name="ends_at"
+                                        defaultValue={toDatetimeLocal(competition.ends_at)}
+                                        required
+                                    />
+                                    <InputError message={errors.ends_at} />
+                                </div>
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="evaluation_method">Evaluation Method</Label>
+                                <Input
+                                    id="evaluation_method"
+                                    name="evaluation_method"
+                                    defaultValue={competition.evaluation_method}
+                                    required
+                                />
+                                <InputError message={errors.evaluation_method} />
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <Checkbox
+                                    id="requires_approval"
+                                    name="requires_approval"
+                                    defaultChecked={competition.requires_approval}
+                                    value="1"
+                                />
+                                <Label htmlFor="requires_approval">Requires my approval before accepting submissions</Label>
+                            </div>
+
+                            <Button type="submit" disabled={processing}>
+                                Save
+                            </Button>
+                        </>
+                    )}
+                </Form>
+            </div>
+        </>
+    );
+}
+
+EditCompetition.layout = {
+    breadcrumbs: [
+        { title: 'Organizer Dashboard', href: dashboard() },
+        { title: 'My Competitions', href: index() },
+        { title: 'Edit', href: '#' },
+    ] as BreadcrumbItem[],
+};
