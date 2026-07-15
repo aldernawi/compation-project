@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CompetitionController;
 use App\Http\Controllers\Admin\CompetitionTypeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
@@ -13,4 +14,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
 
     Route::resource('competition-types', CompetitionTypeController::class)->except(['show']);
+
+    Route::resource('competitions', CompetitionController::class)->except(['show']);
 });
