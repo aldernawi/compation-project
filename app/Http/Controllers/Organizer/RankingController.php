@@ -26,7 +26,7 @@ class RankingController extends Controller
                     'judge' => $evaluation->judge?->only(['id', 'name']),
                     'score' => $evaluation->score,
                     'notes' => $evaluation->notes,
-                ]),
+                ])->values()->all(),
             ])
             ->sortByDesc('average_score')
             ->values();
