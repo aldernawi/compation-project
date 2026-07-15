@@ -15,10 +15,18 @@ class ParticipantController extends Controller
     {
         abort_unless($request->user()->can('update', $competition), 403);
 
+        $search = $request->query('search');
+
         return Inertia::render('organizer/participants/index', [
             'competition' => $competition->only(['id', 'title']),
+            'filters' => ['search' => $search],
             'submissions' => $competition->submissions()
                 ->with('participant:id,name,email')
+                ->whereHas('participant', function ($query) use ($search) {
+                    $query->when($search, fn ($query) => $query->where(function ($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%");
+                    }));
+                })
                 ->latest()
                 ->paginate(15, ['id', 'participant_id', 'status'])
                 ->through(fn (Submission $submission) => [

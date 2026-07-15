@@ -17,10 +17,14 @@ class SubmissionController extends Controller
     {
         abort_unless($request->user()->can('update', $competition), 403);
 
+        $status = $request->query('status');
+
         return Inertia::render('organizer/submissions/index', [
             'competition' => $competition->only(['id', 'title']),
+            'filters' => ['status' => $status],
             'submissions' => $competition->submissions()
                 ->with('participant:id,name')
+                ->when($status, fn ($query) => $query->where('status', $status))
                 ->latest()
                 ->paginate(15),
         ]);

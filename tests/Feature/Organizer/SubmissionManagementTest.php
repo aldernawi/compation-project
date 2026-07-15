@@ -25,6 +25,18 @@ it('forbids viewing submissions for a competition the organizer does not own', f
     $this->actingAs($this->organizer)->get("/organizer/competitions/{$otherCompetition->id}/submissions")->assertForbidden();
 });
 
+it('filters submissions by status', function () {
+    Submission::factory()->create(['competition_id' => $this->competition->id, 'status' => SubmissionStatus::Submitted]);
+    Submission::factory()->create(['competition_id' => $this->competition->id, 'status' => SubmissionStatus::Accepted]);
+
+    $response = $this->actingAs($this->organizer)->get(
+        "/organizer/competitions/{$this->competition->id}/submissions?status=accepted"
+    );
+
+    $response->assertOk();
+    $response->assertInertia(fn ($page) => $page->has('submissions.data', 1));
+});
+
 it('accepts a submission', function () {
     $submission = Submission::factory()->create([
         'competition_id' => $this->competition->id,
