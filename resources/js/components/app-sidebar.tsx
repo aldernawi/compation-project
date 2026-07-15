@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, Users } from 'lucide-react';
+import { BookOpen, FolderGit2, LayoutGrid, Tags, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { dashboard as adminDashboard } from '@/routes/admin';
+import { index as adminCompetitionTypesIndex } from '@/routes/admin/competition-types';
 import { index as adminUsersIndex } from '@/routes/admin/users';
 import { dashboard as judgeDashboard } from '@/routes/judge';
 import { dashboard as organizerDashboard } from '@/routes/organizer';
@@ -23,6 +24,7 @@ import type { NavItem, User } from '@/types';
 const adminNavItems: NavItem[] = [
     { title: 'Dashboard', href: adminDashboard(), icon: LayoutGrid },
     { title: 'Users', href: adminUsersIndex(), icon: Users },
+    { title: 'Competition Types', href: adminCompetitionTypesIndex(), icon: Tags },
 ];
 
 const organizerNavItems: NavItem[] = [{ title: 'Dashboard', href: organizerDashboard(), icon: LayoutGrid }];
