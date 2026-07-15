@@ -15,4 +15,6 @@ Route::middleware(['auth', 'role:judge'])->prefix('judge')->name('judge.')->grou
     Route::get('submissions/{submission}/evaluate', [SubmissionController::class, 'evaluate'])->name('submissions.evaluate');
     Route::post('submissions/{submission}/evaluate', [SubmissionController::class, 'storeEvaluation'])
         ->name('submissions.evaluate.store');
+    Route::patch('submissions/{submission}/needs-review', [SubmissionController::class, 'markNeedsReview'])
+        ->name('submissions.needs-review');
 });

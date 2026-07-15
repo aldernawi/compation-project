@@ -31,7 +31,7 @@ class SubmissionController extends Controller
                 ->through(fn (Submission $submission) => [
                     'id' => $submission->id,
                     'participant' => $submission->participant?->only(['id', 'name']),
-                    'evaluated' => $submission->evaluations->isNotEmpty(),
+                    'evaluation_status' => $submission->evaluations->first()?->status->value,
                 ]),
         ]);
     }
@@ -47,9 +47,10 @@ class SubmissionController extends Controller
                 'id' => $submission->id,
                 'text_content' => $submission->text_content,
                 'link_url' => $submission->link_url,
+                'media_url' => $submission->getFirstMediaUrl('submission_files') ?: null,
                 'participant' => $submission->participant?->only(['id', 'name']),
             ],
-            'evaluation' => $existing?->only(['score', 'notes']),
+            'evaluation' => $existing?->only(['score', 'notes', 'status']),
         ]);
     }
 
@@ -67,6 +68,27 @@ class SubmissionController extends Controller
         );
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Evaluation saved.')]);
+
+        return to_route('judge.competitions.submissions.index', $submission->competition);
+    }
+
+    public function markNeedsReview(Request $request, Submission $submission): RedirectResponse
+    {
+        abort_unless($this->isAssigned($request, $submission->competition), 403);
+
+        $validated = $request->validate([
+            'notes' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        $submission->evaluations()->updateOrCreate(
+            ['judge_id' => $request->user()->id],
+            [
+                'notes' => $validated['notes'] ?? null,
+                'status' => EvaluationStatus::NeedsReview,
+            ],
+        );
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Marked as needs review.')]);
 
         return to_route('judge.competitions.submissions.index', $submission->competition);
     }

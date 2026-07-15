@@ -1,4 +1,4 @@
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, router } from '@inertiajs/react';
 import SubmissionController from '@/actions/App/Http/Controllers/Judge/SubmissionController';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
@@ -6,21 +6,29 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { dashboard } from '@/routes/judge';
 import { index as competitionsIndex } from '@/routes/judge/competitions';
+import { needsReview } from '@/routes/judge/submissions';
 import type { BreadcrumbItem } from '@/types';
 
 type EvaluableSubmission = {
     id: number;
     text_content: string | null;
     link_url: string | null;
+    media_url: string | null;
     participant: { id: number; name: string } | null;
 };
+
+const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+
+function isImageUrl(url: string): boolean {
+    return IMAGE_EXTENSIONS.some((extension) => url.toLowerCase().endsWith(extension));
+}
 
 export default function EvaluateSubmission({
     submission,
     evaluation,
 }: {
     submission: EvaluableSubmission;
-    evaluation: { score: number; notes: string | null } | null;
+    evaluation: { score: number; notes: string | null; status: string } | null;
 }) {
     return (
         <>
@@ -38,6 +46,14 @@ export default function EvaluateSubmission({
                             {submission.link_url}
                         </a>
                     )}
+                    {submission.media_url &&
+                        (isImageUrl(submission.media_url) ? (
+                            <img src={submission.media_url} alt="Submission attachment" className="max-h-96 rounded-md" />
+                        ) : (
+                            <a href={submission.media_url} target="_blank" rel="noreferrer" className="text-sm underline">
+                                View attached file
+                            </a>
+                        ))}
                 </div>
 
                 <Form
@@ -66,9 +82,23 @@ export default function EvaluateSubmission({
                                 <InputError message={errors.notes} />
                             </div>
 
-                            <Button type="submit" disabled={processing}>
-                                Save Evaluation
-                            </Button>
+                            <div className="flex gap-2">
+                                <Button type="submit" disabled={processing}>
+                                    Save Evaluation
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => {
+                                        const notesField = document.getElementById('notes') as HTMLInputElement | null;
+                                        router.patch(needsReview.url({ submission: submission.id }), {
+                                            notes: notesField?.value,
+                                        });
+                                    }}
+                                >
+                                    Mark as Needs Review
+                                </Button>
+                            </div>
                         </>
                     )}
                 </Form>

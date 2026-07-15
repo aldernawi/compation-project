@@ -32,6 +32,23 @@ it('lists accepted submissions for an assigned competition', function () {
     );
 });
 
+it('surfaces the judge own evaluation status in the submission list', function () {
+    $submission = Submission::factory()->create([
+        'competition_id' => $this->competition->id,
+        'status' => SubmissionStatus::Accepted,
+    ]);
+    Evaluation::factory()->create([
+        'submission_id' => $submission->id,
+        'judge_id' => $this->judge->id,
+        'status' => EvaluationStatus::NeedsReview,
+    ]);
+
+    $response = $this->actingAs($this->judge)->get("/judge/competitions/{$this->competition->id}/submissions");
+
+    $response->assertOk();
+    $response->assertInertia(fn ($page) => $page->where('submissions.data.0.evaluation_status', 'needs_review'));
+});
+
 it('forbids listing submissions for a competition the judge is not assigned to', function () {
     $otherCompetition = Competition::factory()->create();
 
@@ -48,6 +65,19 @@ it('shows the evaluation form for an assigned submission', function () {
 
     $response->assertOk();
     $response->assertInertia(fn ($page) => $page->component('judge/submissions/evaluate'));
+});
+
+it('includes the submission media url when a file is attached', function () {
+    $submission = Submission::factory()->create([
+        'competition_id' => $this->competition->id,
+        'status' => SubmissionStatus::Accepted,
+    ]);
+    $submission->addMediaFromString('fake image bytes')->usingFileName('entry.jpg')->toMediaCollection('submission_files');
+
+    $response = $this->actingAs($this->judge)->get("/judge/submissions/{$submission->id}/evaluate");
+
+    $response->assertOk();
+    $response->assertInertia(fn ($page) => $page->where('submission.media_url', fn ($url) => str($url)->contains('entry.jpg')));
 });
 
 it('forbids evaluating a submission for a competition the judge is not assigned to', function () {
@@ -74,6 +104,23 @@ it('creates an evaluation with a score and notes', function () {
     expect($evaluation->score)->toBe(85)
         ->and($evaluation->notes)->toBe('Great work')
         ->and($evaluation->status)->toBe(EvaluationStatus::Evaluated);
+});
+
+it('marks an evaluation as needing review', function () {
+    $submission = Submission::factory()->create([
+        'competition_id' => $this->competition->id,
+        'status' => SubmissionStatus::Accepted,
+    ]);
+
+    $response = $this->actingAs($this->judge)->patch("/judge/submissions/{$submission->id}/needs-review", [
+        'notes' => 'Not sure about this one',
+    ]);
+
+    $response->assertRedirect();
+
+    $evaluation = Evaluation::where('submission_id', $submission->id)->where('judge_id', $this->judge->id)->firstOrFail();
+    expect($evaluation->status)->toBe(EvaluationStatus::NeedsReview)
+        ->and($evaluation->notes)->toBe('Not sure about this one');
 });
 
 it('updates an existing evaluation instead of creating a duplicate', function () {

@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $submission_id
+ * @property int $judge_id
+ * @property int|null $score
+ * @property string|null $notes
+ * @property EvaluationStatus $status
+ */
 class Evaluation extends Model
 {
     /** @use HasFactory<EvaluationFactory> */

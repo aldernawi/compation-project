@@ -8,7 +8,7 @@ import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 
 type JudgeSubmission = {
     id: number;
-    evaluated: boolean;
+    evaluation_status: 'evaluated' | 'needs_review' | null;
     participant: { id: number; name: string } | null;
 };
 
@@ -30,14 +30,23 @@ export default function SubmissionsIndex({
                         { header: 'Participant', cell: (s: JudgeSubmission) => s.participant?.name ?? '—' },
                         {
                             header: 'Status',
-                            cell: (s: JudgeSubmission) =>
-                                s.evaluated ? <Badge>Evaluated</Badge> : <Badge variant="secondary">Not yet evaluated</Badge>,
+                            cell: (s: JudgeSubmission) => {
+                                if (s.evaluation_status === 'evaluated') {
+                                    return <Badge>Evaluated</Badge>;
+                                }
+
+                                if (s.evaluation_status === 'needs_review') {
+                                    return <Badge variant="destructive">Needs Review</Badge>;
+                                }
+
+                                return <Badge variant="secondary">Not yet evaluated</Badge>;
+                            },
                         },
                         {
                             header: 'Actions',
                             cell: (s: JudgeSubmission) => (
                                 <Link href={evaluate({ submission: s.id })} className="text-sm underline">
-                                    {s.evaluated ? 'Review Evaluation' : 'Evaluate'}
+                                    {s.evaluation_status ? 'Review Evaluation' : 'Evaluate'}
                                 </Link>
                             ),
                         },
