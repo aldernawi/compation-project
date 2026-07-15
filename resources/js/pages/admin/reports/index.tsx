@@ -1,4 +1,7 @@
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { dashboard } from '@/routes/admin';
 import { index } from '@/routes/admin/reports';
@@ -23,10 +26,12 @@ type SubmissionsByType = {
 };
 
 export default function ReportsIndex({
+    filters,
     stats,
     mostParticipatedCompetitions,
     submissionsByType,
 }: {
+    filters: { from: string | null; to: string | null };
     stats: Stats;
     mostParticipatedCompetitions: CompetitionParticipation[];
     submissionsByType: SubmissionsByType[];
@@ -36,6 +41,28 @@ export default function ReportsIndex({
             <Head title="Reports" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4">
                 <h1 className="text-lg font-semibold">Reports & Statistics</h1>
+
+                <form
+                    className="flex items-end gap-2"
+                    onSubmit={(event) => {
+                        event.preventDefault();
+                        const form = new FormData(event.currentTarget);
+                        router.get(index().url, {
+                            from: form.get('from') || undefined,
+                            to: form.get('to') || undefined,
+                        });
+                    }}
+                >
+                    <div className="grid gap-2">
+                        <Label htmlFor="from">From</Label>
+                        <Input id="from" type="date" name="from" defaultValue={filters.from ?? ''} />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="to">To</Label>
+                        <Input id="to" type="date" name="to" defaultValue={filters.to ?? ''} />
+                    </div>
+                    <Button type="submit">Filter</Button>
+                </form>
 
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                     {[
