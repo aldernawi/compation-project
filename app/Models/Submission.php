@@ -11,6 +11,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * @property int $id
+ * @property int $competition_id
+ * @property int $participant_id
+ * @property SubmissionStatus $status
+ * @property string|null $text_content
+ * @property string|null $link_url
+ */
 class Submission extends Model implements HasMedia
 {
     /** @use HasFactory<SubmissionFactory> */
