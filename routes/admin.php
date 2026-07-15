@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CompetitionController;
 use App\Http\Controllers\Admin\CompetitionTypeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PrizeController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ResultsController;
 use App\Http\Controllers\Admin\SubmissionController;
 use App\Http\Controllers\Admin\UserController;
@@ -30,4 +31,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         ->name('competitions.results.assign-prize');
     Route::post('competitions/{competition}/results/publish', [ResultsController::class, 'publish'])
         ->name('competitions.results.publish');
+
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
 });
