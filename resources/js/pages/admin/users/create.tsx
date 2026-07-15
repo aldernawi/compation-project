@@ -2,6 +2,7 @@ import { Form, Head } from '@inertiajs/react';
 import UserController from '@/actions/App/Http/Controllers/Admin/UserController';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { dashboard } from '@/routes/admin';
@@ -56,6 +57,11 @@ export default function CreateUser() {
                                     <option value="participant">Participant</option>
                                 </select>
                                 <InputError message={errors.role} />
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <Checkbox id="can_manage_judges" name="can_manage_judges" value="1" />
+                                <Label htmlFor="can_manage_judges">Can manage judges (for organizers)</Label>
                             </div>
 
                             <div className="flex gap-2">

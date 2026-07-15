@@ -52,6 +52,20 @@ it('updates a user', function () {
         ->and($user->fresh()->role)->toBe(Role::Judge);
 });
 
+it('grants an organizer permission to manage judges', function () {
+    $organizer = User::factory()->organizer()->create(['can_manage_judges' => false]);
+
+    $response = $this->actingAs($this->admin)->put("/admin/users/{$organizer->id}", [
+        'name' => $organizer->name,
+        'email' => $organizer->email,
+        'role' => 'organizer',
+        'can_manage_judges' => true,
+    ]);
+
+    $response->assertRedirect('/admin/users');
+    expect($organizer->fresh()->can_manage_judges)->toBeTrue();
+});
+
 it('suspends and activates a user', function () {
     $user = User::factory()->participant()->create();
 

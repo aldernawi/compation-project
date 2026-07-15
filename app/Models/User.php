@@ -50,6 +50,7 @@ class User extends Authenticatable implements PasskeyUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => Role::class,
+            'can_manage_judges' => 'boolean',
             'suspended_at' => 'datetime',
         ];
     }

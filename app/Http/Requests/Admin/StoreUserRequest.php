@@ -23,6 +23,7 @@ class StoreUserRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:8'],
             'role' => ['required', new Enum(Role::class)],
+            'can_manage_judges' => ['boolean'],
         ];
     }
 }
