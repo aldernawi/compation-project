@@ -25,11 +25,14 @@ class UpdateSubmissionRequest extends FormRequest
     {
         /** @var Submission $submission */
         $submission = $this->route('submission');
+        $kind = $submission->competition->competitionType->submission_kind;
 
-        return match ($submission->competition->competitionType->submission_kind) {
+        return match ($kind) {
             SubmissionKind::Text => ['text_content' => ['required', 'string']],
             SubmissionKind::Link => ['link_url' => ['required', 'url']],
-            SubmissionKind::Image, SubmissionKind::Pdf, SubmissionKind::Video => ['file' => ['nullable', 'file']],
+            SubmissionKind::Image, SubmissionKind::Pdf, SubmissionKind::Video => [
+                'file' => ['nullable', 'file', ...$kind->fileRules()],
+            ],
         };
     }
 }
