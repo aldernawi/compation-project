@@ -24,11 +24,13 @@ Organizer-specific permission grants (e.g. "grant permissions to a specific orga
 ## Data Model
 
 ### `competition_types`
+
 - `name`, `slug`, `description`
 - `submission_kind` enum: `image`, `pdf`, `video`, `text`, `link`
 - Admin CRUDs this table; it determines what a participant can upload for a given competition.
 
 ### `competitions`
+
 - `organizer_id` (FK users)
 - `competition_type_id` (FK competition_types)
 - `title`, `description`, `terms`
@@ -38,12 +40,14 @@ Organizer-specific permission grants (e.g. "grant permissions to a specific orga
 - `evaluation_method` (string/enum, e.g. `average_score`)
 
 ### `prizes`
+
 - `competition_id` (FK)
 - `title`, `description`
 - `winners_count`
 - `rank` (1st/2nd/3rd place slot)
 
 ### `submissions`
+
 - `competition_id` (FK), `participant_id` (FK users)
 - `status` enum: `submitted`, `under_review`, `accepted`, `rejected`, `under_evaluation`, `evaluated`
 - `text_content` (nullable string) — for text-type competitions
@@ -51,10 +55,12 @@ Organizer-specific permission grants (e.g. "grant permissions to a specific orga
 - File-based submissions (image/PDF/video) use **spatie/laravel-medialibrary** (new dependency, approved) instead of raw file columns. The submission's expected content type is implied by its competition's `competition_type.submission_kind`, so no redundant `type` column is needed on `submissions`.
 
 ### `competition_judge` (pivot)
+
 - `competition_id`, `judge_id`
 - Whole-competition assignment — a judge assigned to a competition sees all of its accepted submissions. Per-submission scoping is out of scope for phase 1 (documented as a future `submission_judge` pivot if needed).
 
 ### `evaluations`
+
 - `submission_id` (FK), `judge_id` (FK users)
 - `score`, `notes`
 - `status` enum: `pending`, `evaluated`, `needs_review`
