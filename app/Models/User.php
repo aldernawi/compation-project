@@ -75,4 +75,12 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->belongsToMany(Competition::class, 'competition_judge', 'judge_id', 'competition_id');
     }
+
+    /**
+     * @return HasMany<Evaluation, $this>
+     */
+    public function evaluations(): HasMany
+    {
+        return $this->hasMany(Evaluation::class, 'judge_id');
+    }
 }
