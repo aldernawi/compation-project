@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes/admin';
 import { create, destroy, edit, index } from '@/routes/admin/competitions';
 import { index as prizesIndex } from '@/routes/admin/competitions/prizes';
+import { show as resultsShow } from '@/routes/admin/competitions/results';
 import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 
 type AdminCompetition = {
@@ -45,6 +46,9 @@ export default function CompetitionsIndex({ competitions }: { competitions: Lara
                                     </Link>
                                     <Link href={prizesIndex({ competition: c.id })} className="text-sm underline">
                                         Prizes
+                                    </Link>
+                                    <Link href={resultsShow({ competition: c.id })} className="text-sm underline">
+                                        Results
                                     </Link>
                                     <button
                                         type="button"

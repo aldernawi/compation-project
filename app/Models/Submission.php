@@ -24,7 +24,7 @@ class Submission extends Model implements HasMedia
     /** @use HasFactory<SubmissionFactory> */
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['competition_id', 'participant_id', 'status', 'text_content', 'link_url'];
+    protected $fillable = ['competition_id', 'participant_id', 'prize_id', 'status', 'text_content', 'link_url'];
 
     protected function casts(): array
     {
@@ -47,6 +47,14 @@ class Submission extends Model implements HasMedia
     public function participant(): BelongsTo
     {
         return $this->belongsTo(User::class, 'participant_id');
+    }
+
+    /**
+     * @return BelongsTo<Prize, $this>
+     */
+    public function prize(): BelongsTo
+    {
+        return $this->belongsTo(Prize::class);
     }
 
     /**

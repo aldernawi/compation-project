@@ -18,6 +18,7 @@ class Competition extends Model
     protected $fillable = [
         'organizer_id', 'competition_type_id', 'title', 'description', 'terms',
         'starts_at', 'ends_at', 'status', 'requires_approval', 'evaluation_method',
+        'results_published_at',
     ];
 
     protected function casts(): array
@@ -27,6 +28,7 @@ class Competition extends Model
             'ends_at' => 'datetime',
             'status' => CompetitionStatus::class,
             'requires_approval' => 'boolean',
+            'results_published_at' => 'datetime',
         ];
     }
 
