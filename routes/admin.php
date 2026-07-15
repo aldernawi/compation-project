@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CompetitionController;
 use App\Http\Controllers\Admin\CompetitionTypeController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PrizeController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,5 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('competition-types', CompetitionTypeController::class)->except(['show']);
 
     Route::resource('competitions', CompetitionController::class)->except(['show']);
+    Route::resource('competitions.prizes', PrizeController::class)->except(['show'])->scoped();
 });
