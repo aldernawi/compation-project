@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes/organizer';
 import { create, edit, index } from '@/routes/organizer/competitions';
 import { index as judgesIndex } from '@/routes/organizer/competitions/judges';
+import { create as notificationsCreate } from '@/routes/organizer/competitions/notifications';
 import { index as participantsIndex } from '@/routes/organizer/competitions/participants';
 import { index as rankingsIndex } from '@/routes/organizer/competitions/rankings';
 import { index as submissionsIndex } from '@/routes/organizer/competitions/submissions';
@@ -55,6 +56,9 @@ export default function CompetitionsIndex({ competitions }: { competitions: Lara
                                     </Link>
                                     <Link href={rankingsIndex({ competition: c.id })} className="text-sm underline">
                                         Rankings
+                                    </Link>
+                                    <Link href={notificationsCreate({ competition: c.id })} className="text-sm underline">
+                                        Notify
                                     </Link>
                                 </div>
                             ),

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Organizer\CompetitionController;
 use App\Http\Controllers\Organizer\DashboardController;
 use App\Http\Controllers\Organizer\JudgeController;
+use App\Http\Controllers\Organizer\NotificationController;
 use App\Http\Controllers\Organizer\ParticipantController;
 use App\Http\Controllers\Organizer\RankingController;
 use App\Http\Controllers\Organizer\SubmissionController;
@@ -28,4 +29,9 @@ Route::middleware(['auth', 'role:organizer'])->prefix('organizer')->name('organi
         ->name('competitions.participants.index');
 
     Route::get('competitions/{competition}/rankings', [RankingController::class, 'index'])->name('competitions.rankings.index');
+
+    Route::get('competitions/{competition}/notifications/create', [NotificationController::class, 'create'])
+        ->name('competitions.notifications.create');
+    Route::post('competitions/{competition}/notifications', [NotificationController::class, 'store'])
+        ->name('competitions.notifications.store');
 });
