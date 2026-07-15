@@ -6,6 +6,7 @@ import { dashboard } from '@/routes/organizer';
 import { create, edit, index } from '@/routes/organizer/competitions';
 import { index as judgesIndex } from '@/routes/organizer/competitions/judges';
 import { index as participantsIndex } from '@/routes/organizer/competitions/participants';
+import { index as rankingsIndex } from '@/routes/organizer/competitions/rankings';
 import { index as submissionsIndex } from '@/routes/organizer/competitions/submissions';
 import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 
@@ -51,6 +52,9 @@ export default function CompetitionsIndex({ competitions }: { competitions: Lara
                                     </Link>
                                     <Link href={participantsIndex({ competition: c.id })} className="text-sm underline">
                                         Participants
+                                    </Link>
+                                    <Link href={rankingsIndex({ competition: c.id })} className="text-sm underline">
+                                        Rankings
                                     </Link>
                                 </div>
                             ),

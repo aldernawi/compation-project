@@ -4,6 +4,7 @@ use App\Http\Controllers\Organizer\CompetitionController;
 use App\Http\Controllers\Organizer\DashboardController;
 use App\Http\Controllers\Organizer\JudgeController;
 use App\Http\Controllers\Organizer\ParticipantController;
+use App\Http\Controllers\Organizer\RankingController;
 use App\Http\Controllers\Organizer\SubmissionController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,6 @@ Route::middleware(['auth', 'role:organizer'])->prefix('organizer')->name('organi
 
     Route::get('competitions/{competition}/participants', [ParticipantController::class, 'index'])
         ->name('competitions.participants.index');
+
+    Route::get('competitions/{competition}/rankings', [RankingController::class, 'index'])->name('competitions.rankings.index');
 });
