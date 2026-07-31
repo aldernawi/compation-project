@@ -11,39 +11,39 @@ import type { BreadcrumbItem } from '@/types';
 export default function CreatePrize({ competition }: { competition: { id: number; title: string } }) {
     return (
         <>
-            <Head title={`New Prize — ${competition.title}`} />
+            <Head title={`جائزة جديدة — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">New Prize for {competition.title}</h1>
+                <h1 className="text-lg font-semibold">جائزة جديدة لـ {competition.title}</h1>
 
                 <Form {...PrizeController.store.form({ competition: competition.id })} className="max-w-md space-y-6">
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="title">Title</Label>
+                                <Label htmlFor="title">العنوان</Label>
                                 <Input id="title" name="title" required />
                                 <InputError message={errors.title} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="description">Description</Label>
+                                <Label htmlFor="description">الوصف</Label>
                                 <Input id="description" name="description" />
                                 <InputError message={errors.description} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="rank">Rank</Label>
+                                <Label htmlFor="rank">المرتبة</Label>
                                 <Input id="rank" type="number" name="rank" min={1} defaultValue={1} required />
                                 <InputError message={errors.rank} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="winners_count">Winners Count</Label>
+                                <Label htmlFor="winners_count">عدد الفائزين</Label>
                                 <Input id="winners_count" type="number" name="winners_count" min={1} defaultValue={1} required />
                                 <InputError message={errors.winners_count} />
                             </div>
 
                             <Button type="submit" disabled={processing}>
-                                Create
+                                إنشاء
                             </Button>
                         </>
                     )}
@@ -55,8 +55,8 @@ export default function CreatePrize({ competition }: { competition: { id: number
 
 CreatePrize.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Competitions', href: competitionsIndex() },
-        { title: 'New Prize', href: '#' },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'المسابقات', href: competitionsIndex() },
+        { title: 'جائزة جديدة', href: '#' },
     ] as BreadcrumbItem[],
 };

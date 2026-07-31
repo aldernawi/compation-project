@@ -45,7 +45,7 @@ export function NavUser() {
                             isMobile
                                 ? 'bottom'
                                 : state === 'collapsed'
-                                  ? 'left'
+                                  ? 'right'
                                   : 'bottom'
                         }
                     >

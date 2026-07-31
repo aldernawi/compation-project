@@ -21,32 +21,32 @@ export default function SubmissionsIndex({
 }) {
     return (
         <>
-            <Head title={`Evaluate — ${competition.title}`} />
+            <Head title={`التقييم — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Submissions for {competition.title}</h1>
+                <h1 className="text-lg font-semibold">مشاركات {competition.title}</h1>
 
                 <DataTable
                     columns={[
-                        { header: 'Participant', cell: (s: JudgeSubmission) => s.participant?.name ?? '—' },
+                        { header: 'المشارك', cell: (s: JudgeSubmission) => s.participant?.name ?? '—' },
                         {
-                            header: 'Status',
+                            header: 'الحالة',
                             cell: (s: JudgeSubmission) => {
                                 if (s.evaluation_status === 'evaluated') {
-                                    return <Badge>Evaluated</Badge>;
+                                    return <Badge>تم التقييم</Badge>;
                                 }
 
                                 if (s.evaluation_status === 'needs_review') {
-                                    return <Badge variant="destructive">Needs Review</Badge>;
+                                    return <Badge variant="destructive">يحتاج مراجعة</Badge>;
                                 }
 
-                                return <Badge variant="secondary">Not yet evaluated</Badge>;
+                                return <Badge variant="secondary">لم يتم التقييم بعد</Badge>;
                             },
                         },
                         {
-                            header: 'Actions',
+                            header: 'إجراءات',
                             cell: (s: JudgeSubmission) => (
                                 <Link href={evaluate({ submission: s.id })} className="text-sm underline">
-                                    {s.evaluation_status ? 'Review Evaluation' : 'Evaluate'}
+                                    {s.evaluation_status ? 'مراجعة التقييم' : 'تقييم'}
                                 </Link>
                             ),
                         },
@@ -60,8 +60,8 @@ export default function SubmissionsIndex({
 
 SubmissionsIndex.layout = {
     breadcrumbs: [
-        { title: 'Judge Dashboard', href: dashboard() },
-        { title: 'Assigned Competitions', href: competitionsIndex() },
-        { title: 'Submissions', href: '#' },
+        { title: 'لوحة تحكم الحكم', href: dashboard() },
+        { title: 'المسابقات المعينة', href: competitionsIndex() },
+        { title: 'المشاركات', href: '#' },
     ] as BreadcrumbItem[],
 };

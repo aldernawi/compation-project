@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { dashboard } from '@/routes/admin';
 import { index as competitionsIndex } from '@/routes/admin/competitions';
 import { assignPrize, publish } from '@/routes/admin/competitions/results';
+import { translateSubmissionStatus } from '@/lib/translations';
 import type { BreadcrumbItem } from '@/types';
 
 type ResultPrize = { id: number; title: string; rank: number };
@@ -28,24 +29,24 @@ export default function ResultsShow({
 }) {
     return (
         <>
-            <Head title={`Results — ${competition.title}`} />
+            <Head title={`النتائج — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-lg font-semibold">Results for {competition.title}</h1>
+                    <h1 className="text-lg font-semibold">نتائج {competition.title}</h1>
                     <div className="flex items-center gap-3">
                         {competition.results_published_at ? (
-                            <Badge>Published</Badge>
+                            <Badge>منشورة</Badge>
                         ) : (
-                            <Badge variant="secondary">Not Published</Badge>
+                            <Badge variant="secondary">غير منشورة</Badge>
                         )}
                         <Button
                             onClick={() => {
-                                if (confirm('Publish results and notify winners?')) {
+                                if (confirm('نشر النتائج وإشعار الفائزين؟')) {
                                     router.post(publish.url({ competition: competition.id }));
                                 }
                             }}
                         >
-                            Publish Results
+                            نشر النتائج
                         </Button>
                     </div>
                 </div>
@@ -53,17 +54,17 @@ export default function ResultsShow({
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Participant</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Average Score</TableHead>
-                            <TableHead>Prize</TableHead>
+                            <TableHead>المشارك</TableHead>
+                            <TableHead>الحالة</TableHead>
+                            <TableHead>متوسط الدرجة</TableHead>
+                            <TableHead>الجائزة</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {submissions.map((submission) => (
                             <TableRow key={submission.id}>
                                 <TableCell>{submission.participant?.name ?? '—'}</TableCell>
-                                <TableCell>{submission.status}</TableCell>
+                                <TableCell>{translateSubmissionStatus(submission.status)}</TableCell>
                                 <TableCell>{submission.average_score ?? '—'}</TableCell>
                                 <TableCell>
                                     <select
@@ -76,7 +77,7 @@ export default function ResultsShow({
                                         }
                                         className="border-input h-9 rounded-md border bg-transparent px-2 text-sm"
                                     >
-                                        <option value="">No prize</option>
+                                        <option value="">بدون جائزة</option>
                                         {prizes.map((prize) => (
                                             <option key={prize.id} value={prize.id}>
                                                 {prize.title}
@@ -95,8 +96,8 @@ export default function ResultsShow({
 
 ResultsShow.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Competitions', href: competitionsIndex() },
-        { title: 'Results', href: '#' },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'المسابقات', href: competitionsIndex() },
+        { title: 'النتائج', href: '#' },
     ] as BreadcrumbItem[],
 };

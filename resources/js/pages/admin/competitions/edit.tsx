@@ -40,21 +40,21 @@ export default function EditCompetition({
 }) {
     return (
         <>
-            <Head title="Edit Competition" />
+            <Head title="تعديل المسابقة" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Edit Competition</h1>
+                <h1 className="text-lg font-semibold">تعديل المسابقة</h1>
 
                 <Form {...CompetitionController.update.form({ competition: competition.id })} className="max-w-xl space-y-6">
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="title">Title</Label>
+                                <Label htmlFor="title">العنوان</Label>
                                 <Input id="title" name="title" defaultValue={competition.title} required />
                                 <InputError message={errors.title} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="organizer_id">Organizer</Label>
+                                <Label htmlFor="organizer_id">المنظم</Label>
                                 <select
                                     id="organizer_id"
                                     name="organizer_id"
@@ -72,7 +72,7 @@ export default function EditCompetition({
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="competition_type_id">Competition Type</Label>
+                                <Label htmlFor="competition_type_id">نوع المسابقة</Label>
                                 <select
                                     id="competition_type_id"
                                     name="competition_type_id"
@@ -90,20 +90,20 @@ export default function EditCompetition({
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="description">Description</Label>
+                                <Label htmlFor="description">الوصف</Label>
                                 <Input id="description" name="description" defaultValue={competition.description ?? ''} />
                                 <InputError message={errors.description} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="terms">Terms</Label>
+                                <Label htmlFor="terms">الشروط</Label>
                                 <Input id="terms" name="terms" defaultValue={competition.terms ?? ''} />
                                 <InputError message={errors.terms} />
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="starts_at">Starts At</Label>
+                                    <Label htmlFor="starts_at">تاريخ البداية</Label>
                                     <Input
                                         id="starts_at"
                                         type="datetime-local"
@@ -114,7 +114,7 @@ export default function EditCompetition({
                                     <InputError message={errors.starts_at} />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="ends_at">Ends At</Label>
+                                    <Label htmlFor="ends_at">تاريخ النهاية</Label>
                                     <Input
                                         id="ends_at"
                                         type="datetime-local"
@@ -127,7 +127,7 @@ export default function EditCompetition({
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="status">Status</Label>
+                                <Label htmlFor="status">الحالة</Label>
                                 <select
                                     id="status"
                                     name="status"
@@ -135,17 +135,17 @@ export default function EditCompetition({
                                     defaultValue={competition.status}
                                     className="border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none md:text-sm"
                                 >
-                                    <option value="upcoming">Upcoming</option>
-                                    <option value="open">Open</option>
-                                    <option value="closed">Closed</option>
-                                    <option value="under_evaluation">Under Evaluation</option>
-                                    <option value="finished">Finished</option>
+                                    <option value="upcoming">قادمة</option>
+                                    <option value="open">مفتوحة</option>
+                                    <option value="closed">مغلقة</option>
+                                    <option value="under_evaluation">قيد التقييم</option>
+                                    <option value="finished">منتهية</option>
                                 </select>
                                 <InputError message={errors.status} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="evaluation_method">Evaluation Method</Label>
+                                <Label htmlFor="evaluation_method">طريقة التقييم</Label>
                                 <Input
                                     id="evaluation_method"
                                     name="evaluation_method"
@@ -162,11 +162,11 @@ export default function EditCompetition({
                                     defaultChecked={competition.requires_approval}
                                     value="1"
                                 />
-                                <Label htmlFor="requires_approval">Requires organizer approval before accepting submissions</Label>
+                                <Label htmlFor="requires_approval">يتطلب موافقة المنظم قبل قبول المشاركات</Label>
                             </div>
 
                             <Button type="submit" disabled={processing}>
-                                Save
+                                حفظ
                             </Button>
                         </>
                     )}
@@ -178,8 +178,8 @@ export default function EditCompetition({
 
 EditCompetition.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Competitions', href: index() },
-        { title: 'Edit', href: '#' },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'المسابقات', href: index() },
+        { title: 'تعديل', href: '#' },
     ] as BreadcrumbItem[],
 };

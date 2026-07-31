@@ -9,6 +9,7 @@ import { create as notificationsCreate } from '@/routes/organizer/competitions/n
 import { index as participantsIndex } from '@/routes/organizer/competitions/participants';
 import { index as rankingsIndex } from '@/routes/organizer/competitions/rankings';
 import { index as submissionsIndex } from '@/routes/organizer/competitions/submissions';
+import { translateCompetitionStatus } from '@/lib/translations';
 import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 
 type OrganizerCompetition = {
@@ -21,44 +22,44 @@ type OrganizerCompetition = {
 export default function CompetitionsIndex({ competitions }: { competitions: LaravelPaginator<OrganizerCompetition> }) {
     return (
         <>
-            <Head title="My Competitions" />
+            <Head title="مسابقاتي" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-lg font-semibold">My Competitions</h1>
+                    <h1 className="text-lg font-semibold">مسابقاتي</h1>
                     <Button asChild>
-                        <Link href={create()}>New Competition</Link>
+                        <Link href={create()}>مسابقة جديدة</Link>
                     </Button>
                 </div>
 
                 <DataTable
                     columns={[
-                        { header: 'Title', cell: (c: OrganizerCompetition) => c.title },
-                        { header: 'Type', cell: (c: OrganizerCompetition) => c.competition_type?.name ?? '—' },
+                        { header: 'العنوان', cell: (c: OrganizerCompetition) => c.title },
+                        { header: 'النوع', cell: (c: OrganizerCompetition) => c.competition_type?.name ?? '—' },
                         {
-                            header: 'Status',
-                            cell: (c: OrganizerCompetition) => <Badge variant="secondary">{c.status}</Badge>,
+                            header: 'الحالة',
+                            cell: (c: OrganizerCompetition) => <Badge variant="secondary">{translateCompetitionStatus(c.status)}</Badge>,
                         },
                         {
-                            header: 'Actions',
+                            header: 'إجراءات',
                             cell: (c: OrganizerCompetition) => (
                                 <div className="flex gap-2">
                                     <Link href={edit({ competition: c.id })} className="text-sm underline">
-                                        Edit
+                                        تعديل
                                     </Link>
                                     <Link href={submissionsIndex({ competition: c.id })} className="text-sm underline">
-                                        Submissions
+                                        المشاركات
                                     </Link>
                                     <Link href={judgesIndex({ competition: c.id })} className="text-sm underline">
-                                        Judges
+                                        الحكام
                                     </Link>
                                     <Link href={participantsIndex({ competition: c.id })} className="text-sm underline">
-                                        Participants
+                                        المشاركون
                                     </Link>
                                     <Link href={rankingsIndex({ competition: c.id })} className="text-sm underline">
-                                        Rankings
+                                        الترتيب
                                     </Link>
                                     <Link href={notificationsCreate({ competition: c.id })} className="text-sm underline">
-                                        Notify
+                                        إشعار
                                     </Link>
                                 </div>
                             ),
@@ -73,7 +74,7 @@ export default function CompetitionsIndex({ competitions }: { competitions: Lara
 
 CompetitionsIndex.layout = {
     breadcrumbs: [
-        { title: 'Organizer Dashboard', href: dashboard() },
-        { title: 'My Competitions', href: index() },
+        { title: 'لوحة تحكم المنظم', href: dashboard() },
+        { title: 'مسابقاتي', href: index() },
     ] as BreadcrumbItem[],
 };

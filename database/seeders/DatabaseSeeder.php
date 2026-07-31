@@ -76,5 +76,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->participant()->count(10)->create();
+
+        // Competitions with types, prizes, and submissions
+        $this->call(CompetitionSeeder::class);
     }
 }

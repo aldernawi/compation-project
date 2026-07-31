@@ -20,27 +20,27 @@ type EditableUser = {
 export default function EditUser({ user }: { user: EditableUser }) {
     return (
         <>
-            <Head title="Edit User" />
+            <Head title="تعديل المستخدم" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Edit User</h1>
+                <h1 className="text-lg font-semibold">تعديل المستخدم</h1>
 
                 <Form {...UserController.update.form({ user: user.id })} className="max-w-md space-y-6">
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">الاسم</Label>
                                 <Input id="name" name="name" defaultValue={user.name} required autoComplete="name" />
                                 <InputError message={errors.name} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">البريد الإلكتروني</Label>
                                 <Input id="email" type="email" name="email" defaultValue={user.email} required autoComplete="email" />
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="role">Role</Label>
+                                <Label htmlFor="role">الدور</Label>
                                 <select
                                     id="role"
                                     name="role"
@@ -48,10 +48,10 @@ export default function EditUser({ user }: { user: EditableUser }) {
                                     defaultValue={user.role}
                                     className="border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none md:text-sm"
                                 >
-                                    <option value="admin">Admin</option>
-                                    <option value="organizer">Organizer</option>
-                                    <option value="judge">Judge</option>
-                                    <option value="participant">Participant</option>
+                                    <option value="admin">مدير</option>
+                                    <option value="organizer">منظم</option>
+                                    <option value="judge">حَكَم</option>
+                                    <option value="participant">مشارك</option>
                                 </select>
                                 <InputError message={errors.role} />
                             </div>
@@ -63,12 +63,12 @@ export default function EditUser({ user }: { user: EditableUser }) {
                                     defaultChecked={user.can_manage_judges}
                                     value="1"
                                 />
-                                <Label htmlFor="can_manage_judges">Can manage judges (for organizers)</Label>
+                                <Label htmlFor="can_manage_judges">يمكنه إدارة الحكام (للمنظمين)</Label>
                             </div>
 
                             <div className="flex gap-2">
                                 <Button type="submit" disabled={processing}>
-                                    Save
+                                    حفظ
                                 </Button>
                             </div>
                         </>
@@ -81,8 +81,8 @@ export default function EditUser({ user }: { user: EditableUser }) {
 
 EditUser.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Users', href: index() },
-        { title: 'Edit', href: '#' },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'المستخدمون', href: index() },
+        { title: 'تعديل', href: '#' },
     ] as BreadcrumbItem[],
 };

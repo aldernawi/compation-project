@@ -29,6 +29,7 @@ class StoreSubmissionRequest extends FormRequest
             SubmissionKind::Image, SubmissionKind::Pdf, SubmissionKind::Video => [
                 'file' => ['required', 'file', ...$kind->fileRules()],
             ],
+            SubmissionKind::None => [],
         };
     }
 }

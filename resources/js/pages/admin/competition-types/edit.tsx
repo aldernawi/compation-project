@@ -12,15 +12,15 @@ type EditableCompetitionType = {
     id: number;
     name: string;
     description: string | null;
-    submission_kind: 'image' | 'pdf' | 'video' | 'text' | 'link';
+    submission_kind: 'image' | 'pdf' | 'video' | 'text' | 'link' | 'none';
 };
 
 export default function EditCompetitionType({ competitionType }: { competitionType: EditableCompetitionType }) {
     return (
         <>
-            <Head title="Edit Competition Type" />
+            <Head title="تعديل نوع المسابقة" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Edit Competition Type</h1>
+                <h1 className="text-lg font-semibold">تعديل نوع المسابقة</h1>
 
                 <Form
                     {...CompetitionTypeController.update.form({ competition_type: competitionType.id })}
@@ -29,19 +29,19 @@ export default function EditCompetitionType({ competitionType }: { competitionTy
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">الاسم</Label>
                                 <Input id="name" name="name" defaultValue={competitionType.name} required />
                                 <InputError message={errors.name} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="description">Description</Label>
+                                <Label htmlFor="description">الوصف</Label>
                                 <Input id="description" name="description" defaultValue={competitionType.description ?? ''} />
                                 <InputError message={errors.description} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="submission_kind">Submission Kind</Label>
+                                <Label htmlFor="submission_kind">نوع المشاركة</Label>
                                 <select
                                     id="submission_kind"
                                     name="submission_kind"
@@ -49,17 +49,18 @@ export default function EditCompetitionType({ competitionType }: { competitionTy
                                     defaultValue={competitionType.submission_kind}
                                     className="border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none md:text-sm"
                                 >
-                                    <option value="image">Image</option>
+                                    <option value="image">صورة</option>
                                     <option value="pdf">PDF</option>
-                                    <option value="video">Video</option>
-                                    <option value="text">Text</option>
-                                    <option value="link">Link</option>
+                                    <option value="video">فيديو</option>
+                                    <option value="text">نص</option>
+                                    <option value="link">رابط</option>
+                                    <option value="none">تسجيل فقط</option>
                                 </select>
                                 <InputError message={errors.submission_kind} />
                             </div>
 
                             <Button type="submit" disabled={processing}>
-                                Save
+                                حفظ
                             </Button>
                         </>
                     )}
@@ -71,8 +72,8 @@ export default function EditCompetitionType({ competitionType }: { competitionTy
 
 EditCompetitionType.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Competition Types', href: index() },
-        { title: 'Edit', href: '#' },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'أنواع المسابقات', href: index() },
+        { title: 'تعديل', href: '#' },
     ] as BreadcrumbItem[],
 };

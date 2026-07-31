@@ -19,6 +19,12 @@ class SubmissionResource extends JsonResource
         return [
             'id' => $this->id,
             'competition_id' => $this->competition_id,
+            'competition' => $this->whenLoaded('competition', fn () => [
+                'id' => $this->competition->id,
+                'title' => $this->competition->title,
+                'status' => $this->competition->status->value,
+                'ends_at' => $this->competition->ends_at,
+            ]),
             'status' => $this->status->value,
             'text_content' => $this->text_content,
             'link_url' => $this->link_url,
@@ -30,6 +36,7 @@ class SubmissionResource extends JsonResource
             ),
             'is_winner' => $resultsPublished && $this->prize_id !== null,
             'rank' => $resultsPublished ? $this->rank() : null,
+            'created_at' => $this->created_at,
         ];
     }
 

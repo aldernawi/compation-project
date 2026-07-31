@@ -14,19 +14,19 @@ type JudgeCompetition = {
 export default function CompetitionsIndex({ competitions }: { competitions: LaravelPaginator<JudgeCompetition> }) {
     return (
         <>
-            <Head title="Assigned Competitions" />
+            <Head title="المسابقات المعينة" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Assigned Competitions</h1>
+                <h1 className="text-lg font-semibold">المسابقات المعينة</h1>
 
                 <DataTable
                     columns={[
-                        { header: 'Title', cell: (c: JudgeCompetition) => c.title },
-                        { header: 'Type', cell: (c: JudgeCompetition) => c.competition_type?.name ?? '—' },
+                        { header: 'العنوان', cell: (c: JudgeCompetition) => c.title },
+                        { header: 'النوع', cell: (c: JudgeCompetition) => c.competition_type?.name ?? '—' },
                         {
-                            header: 'Actions',
+                            header: 'إجراءات',
                             cell: (c: JudgeCompetition) => (
                                 <Link href={submissionsIndex({ competition: c.id })} className="text-sm underline">
-                                    Evaluate Submissions
+                                    تقييم المشاركات
                                 </Link>
                             ),
                         },
@@ -40,7 +40,7 @@ export default function CompetitionsIndex({ competitions }: { competitions: Lara
 
 CompetitionsIndex.layout = {
     breadcrumbs: [
-        { title: 'Judge Dashboard', href: dashboard() },
-        { title: 'Assigned Competitions', href: index() },
+        { title: 'لوحة تحكم الحكم', href: dashboard() },
+        { title: 'المسابقات المعينة', href: index() },
     ] as BreadcrumbItem[],
 };

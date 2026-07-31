@@ -12,38 +12,38 @@ import type { BreadcrumbItem } from '@/types';
 export default function CreateUser() {
     return (
         <>
-            <Head title="New User" />
+            <Head title="مستخدم جديد" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">New User</h1>
+                <h1 className="text-lg font-semibold">مستخدم جديد</h1>
 
                 <Form {...UserController.store.form()} className="max-w-md space-y-6">
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">الاسم</Label>
                                 <Input id="name" name="name" required autoComplete="name" />
                                 <InputError message={errors.name} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">البريد الإلكتروني</Label>
                                 <Input id="email" type="email" name="email" required autoComplete="email" />
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">كلمة المرور</Label>
                                 <Input id="password" type="password" name="password" required autoComplete="new-password" />
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">Confirm Password</Label>
+                                <Label htmlFor="password_confirmation">تأكيد كلمة المرور</Label>
                                 <Input id="password_confirmation" type="password" name="password_confirmation" required />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="role">Role</Label>
+                                <Label htmlFor="role">الدور</Label>
                                 <select
                                     id="role"
                                     name="role"
@@ -51,22 +51,22 @@ export default function CreateUser() {
                                     defaultValue="participant"
                                     className="border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none md:text-sm"
                                 >
-                                    <option value="admin">Admin</option>
-                                    <option value="organizer">Organizer</option>
-                                    <option value="judge">Judge</option>
-                                    <option value="participant">Participant</option>
+                                    <option value="admin">مدير</option>
+                                    <option value="organizer">منظم</option>
+                                    <option value="judge">حَكَم</option>
+                                    <option value="participant">مشارك</option>
                                 </select>
                                 <InputError message={errors.role} />
                             </div>
 
                             <div className="flex items-center gap-2">
                                 <Checkbox id="can_manage_judges" name="can_manage_judges" value="1" />
-                                <Label htmlFor="can_manage_judges">Can manage judges (for organizers)</Label>
+                                <Label htmlFor="can_manage_judges">يمكنه إدارة الحكام (للمنظمين)</Label>
                             </div>
 
                             <div className="flex gap-2">
                                 <Button type="submit" disabled={processing}>
-                                    Create
+                                    إنشاء
                                 </Button>
                             </div>
                         </>
@@ -79,8 +79,8 @@ export default function CreateUser() {
 
 CreateUser.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Users', href: index() },
-        { title: 'New', href: UserController.create.url() },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'المستخدمون', href: index() },
+        { title: 'جديد', href: UserController.create.url() },
     ] as BreadcrumbItem[],
 };

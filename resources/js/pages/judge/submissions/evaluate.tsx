@@ -32,11 +32,11 @@ export default function EvaluateSubmission({
 }) {
     return (
         <>
-            <Head title="Evaluate Submission" />
+            <Head title="تقييم المشاركة" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4">
                 <div>
-                    <h1 className="text-lg font-semibold">Evaluate Submission</h1>
-                    <p className="text-muted-foreground text-sm">Participant: {submission.participant?.name ?? '—'}</p>
+                    <h1 className="text-lg font-semibold">تقييم المشاركة</h1>
+                    <p className="text-muted-foreground text-sm">المشارك: {submission.participant?.name ?? '—'}</p>
                 </div>
 
                 <div className="rounded-xl border border-sidebar-border/70 p-4 dark:border-sidebar-border">
@@ -48,10 +48,10 @@ export default function EvaluateSubmission({
                     )}
                     {submission.media_url &&
                         (isImageUrl(submission.media_url) ? (
-                            <img src={submission.media_url} alt="Submission attachment" className="max-h-96 rounded-md" />
+                            <img src={submission.media_url} alt="مرفق المشاركة" className="max-h-96 rounded-md" />
                         ) : (
                             <a href={submission.media_url} target="_blank" rel="noreferrer" className="text-sm underline">
-                                View attached file
+                                عرض الملف المرفق
                             </a>
                         ))}
                 </div>
@@ -63,7 +63,7 @@ export default function EvaluateSubmission({
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="score">Score (0-100)</Label>
+                                <Label htmlFor="score">الدرجة (0-100)</Label>
                                 <Input
                                     id="score"
                                     type="number"
@@ -77,14 +77,14 @@ export default function EvaluateSubmission({
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="notes">Notes</Label>
+                                <Label htmlFor="notes">الملاحظات</Label>
                                 <Input id="notes" name="notes" defaultValue={evaluation?.notes ?? ''} />
                                 <InputError message={errors.notes} />
                             </div>
 
                             <div className="flex gap-2">
                                 <Button type="submit" disabled={processing}>
-                                    Save Evaluation
+                                    حفظ التقييم
                                 </Button>
                                 <Button
                                     type="button"
@@ -96,7 +96,7 @@ export default function EvaluateSubmission({
                                         });
                                     }}
                                 >
-                                    Mark as Needs Review
+                                    وضع علامة يحتاج مراجعة
                                 </Button>
                             </div>
                         </>
@@ -109,8 +109,8 @@ export default function EvaluateSubmission({
 
 EvaluateSubmission.layout = {
     breadcrumbs: [
-        { title: 'Judge Dashboard', href: dashboard() },
-        { title: 'Assigned Competitions', href: competitionsIndex() },
-        { title: 'Evaluate', href: '#' },
+        { title: 'لوحة تحكم الحكم', href: dashboard() },
+        { title: 'المسابقات المعينة', href: competitionsIndex() },
+        { title: 'تقييم', href: '#' },
     ] as BreadcrumbItem[],
 };

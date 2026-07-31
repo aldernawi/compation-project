@@ -11,27 +11,27 @@ import type { BreadcrumbItem } from '@/types';
 export default function CreateCompetitionType() {
     return (
         <>
-            <Head title="New Competition Type" />
+            <Head title="نوع مسابقة جديد" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">New Competition Type</h1>
+                <h1 className="text-lg font-semibold">نوع مسابقة جديد</h1>
 
                 <Form {...CompetitionTypeController.store.form()} className="max-w-md space-y-6">
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">الاسم</Label>
                                 <Input id="name" name="name" required />
                                 <InputError message={errors.name} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="description">Description</Label>
+                                <Label htmlFor="description">الوصف</Label>
                                 <Input id="description" name="description" />
                                 <InputError message={errors.description} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="submission_kind">Submission Kind</Label>
+                                <Label htmlFor="submission_kind">نوع المشاركة</Label>
                                 <select
                                     id="submission_kind"
                                     name="submission_kind"
@@ -39,17 +39,18 @@ export default function CreateCompetitionType() {
                                     defaultValue="image"
                                     className="border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none md:text-sm"
                                 >
-                                    <option value="image">Image</option>
+                                    <option value="image">صورة</option>
                                     <option value="pdf">PDF</option>
-                                    <option value="video">Video</option>
-                                    <option value="text">Text</option>
-                                    <option value="link">Link</option>
+                                    <option value="video">فيديو</option>
+                                    <option value="text">نص</option>
+                                    <option value="link">رابط</option>
+                                    <option value="none">تسجيل فقط</option>
                                 </select>
                                 <InputError message={errors.submission_kind} />
                             </div>
 
                             <Button type="submit" disabled={processing}>
-                                Create
+                                إنشاء
                             </Button>
                         </>
                     )}
@@ -61,8 +62,8 @@ export default function CreateCompetitionType() {
 
 CreateCompetitionType.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Competition Types', href: index() },
-        { title: 'New', href: CompetitionTypeController.create.url() },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'أنواع المسابقات', href: index() },
+        { title: 'جديد', href: CompetitionTypeController.create.url() },
     ] as BreadcrumbItem[],
 };

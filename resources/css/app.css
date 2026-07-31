@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
@@ -9,7 +10,7 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Cairo', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
@@ -141,3 +142,16 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* RTL Adjustments */
+[dir='rtl'] {
+    text-align: right;
+}
+
+[dir='rtl'] .ml-1 { margin-right: 0.25rem; margin-left: 0; }
+[dir='rtl'] .ml-2 { margin-right: 0.5rem; margin-left: 0; }
+[dir='rtl'] .ml-auto { margin-right: 0; margin-left: auto; }
+[dir='rtl'] .mr-2 { margin-left: 0.5rem; margin-right: 0; }
+[dir='rtl'] .-ml-1 { margin-right: -0.25rem; margin-left: 0; }
+[dir='rtl'] .text-left { text-align: right; }
+[dir='rtl'] .text-right { text-align: left; }

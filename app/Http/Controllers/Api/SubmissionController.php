@@ -22,6 +22,15 @@ class SubmissionController extends Controller
         );
     }
 
+    public function show(Request $request, Submission $submission): SubmissionResource
+    {
+        abort_unless($submission->participant_id === $request->user()->id, 403);
+
+        $submission->load('competition');
+
+        return new SubmissionResource($submission);
+    }
+
     public function store(StoreSubmissionRequest $request, Competition $competition): JsonResponse
     {
         $submission = $competition->submissions()->create([

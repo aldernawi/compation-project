@@ -11,9 +11,9 @@ import type { BreadcrumbItem } from '@/types';
 export default function CreateNotification({ competition }: { competition: { id: number; title: string } }) {
     return (
         <>
-            <Head title={`Notify — ${competition.title}`} />
+            <Head title={`إشعار — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Notify Participants of {competition.title}</h1>
+                <h1 className="text-lg font-semibold">إشعار المشاركين في {competition.title}</h1>
 
                 <Form
                     {...NotificationController.store.form({ competition: competition.id })}
@@ -23,16 +23,16 @@ export default function CreateNotification({ competition }: { competition: { id:
                     {({ processing, errors, recentlySuccessful }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="message">Message</Label>
+                                <Label htmlFor="message">الرسالة</Label>
                                 <Input id="message" name="message" required />
                                 <InputError message={errors.message} />
                             </div>
 
                             <Button type="submit" disabled={processing}>
-                                Send
+                                إرسال
                             </Button>
 
-                            {recentlySuccessful && <p className="text-sm text-green-600">Notification sent.</p>}
+                            {recentlySuccessful && <p className="text-sm text-green-600">تم إرسال الإشعار.</p>}
                         </>
                     )}
                 </Form>
@@ -43,8 +43,8 @@ export default function CreateNotification({ competition }: { competition: { id:
 
 CreateNotification.layout = {
     breadcrumbs: [
-        { title: 'Organizer Dashboard', href: dashboard() },
-        { title: 'My Competitions', href: competitionsIndex() },
-        { title: 'Notify', href: '#' },
+        { title: 'لوحة تحكم المنظم', href: dashboard() },
+        { title: 'مسابقاتي', href: competitionsIndex() },
+        { title: 'إشعار', href: '#' },
     ] as BreadcrumbItem[],
 };

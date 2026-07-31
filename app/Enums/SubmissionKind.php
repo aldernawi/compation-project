@@ -9,6 +9,7 @@ enum SubmissionKind: string
     case Video = 'video';
     case Text = 'text';
     case Link = 'link';
+    case None = 'none';
 
     /**
      * Validation rules for the uploaded file matching this submission kind.
@@ -21,7 +22,7 @@ enum SubmissionKind: string
             self::Image => ['mimes:jpg,jpeg,png,gif,webp', 'max:10240'],
             self::Pdf => ['mimes:pdf', 'max:20480'],
             self::Video => ['mimes:mp4,mov,avi,webm', 'max:102400'],
-            self::Text, self::Link => [],
+            self::Text, self::Link, self::None => [],
         };
     }
 }

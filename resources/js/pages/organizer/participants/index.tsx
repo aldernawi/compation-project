@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { dashboard } from '@/routes/organizer';
 import { index as competitionsIndex } from '@/routes/organizer/competitions';
 import { index } from '@/routes/organizer/competitions/participants';
+import { translateSubmissionStatus } from '@/lib/translations';
 import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 
 type ParticipantSubmission = {
@@ -25,9 +26,9 @@ export default function ParticipantsIndex({
 }) {
     return (
         <>
-            <Head title={`Participants — ${competition.title}`} />
+            <Head title={`المشاركون — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Participants in {competition.title}</h1>
+                <h1 className="text-lg font-semibold">المشاركون في {competition.title}</h1>
 
                 <form
                     className="flex items-end gap-2"
@@ -39,17 +40,17 @@ export default function ParticipantsIndex({
                         });
                     }}
                 >
-                    <Input type="search" name="search" placeholder="Search by name or email…" defaultValue={filters.search ?? ''} />
-                    <Button type="submit">Search</Button>
+                    <Input type="search" name="search" placeholder="ابحث بالاسم أو البريد الإلكتروني…" defaultValue={filters.search ?? ''} />
+                    <Button type="submit">بحث</Button>
                 </form>
 
                 <DataTable
                     columns={[
-                        { header: 'Name', cell: (s: ParticipantSubmission) => s.participant?.name ?? '—' },
-                        { header: 'Email', cell: (s: ParticipantSubmission) => s.participant?.email ?? '—' },
+                        { header: 'الاسم', cell: (s: ParticipantSubmission) => s.participant?.name ?? '—' },
+                        { header: 'البريد الإلكتروني', cell: (s: ParticipantSubmission) => s.participant?.email ?? '—' },
                         {
-                            header: 'Submission Status',
-                            cell: (s: ParticipantSubmission) => <Badge variant="secondary">{s.status}</Badge>,
+                            header: 'حالة المشاركة',
+                            cell: (s: ParticipantSubmission) => <Badge variant="secondary">{translateSubmissionStatus(s.status)}</Badge>,
                         },
                     ]}
                     paginator={submissions}
@@ -61,8 +62,8 @@ export default function ParticipantsIndex({
 
 ParticipantsIndex.layout = {
     breadcrumbs: [
-        { title: 'Organizer Dashboard', href: dashboard() },
-        { title: 'My Competitions', href: competitionsIndex() },
-        { title: 'Participants', href: '#' },
+        { title: 'لوحة تحكم المنظم', href: dashboard() },
+        { title: 'مسابقاتي', href: competitionsIndex() },
+        { title: 'المشاركون', href: '#' },
     ] as BreadcrumbItem[],
 };

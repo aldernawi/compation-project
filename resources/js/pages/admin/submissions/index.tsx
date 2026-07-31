@@ -3,6 +3,7 @@ import { DataTable } from '@/components/data-table';
 import { Badge } from '@/components/ui/badge';
 import { dashboard } from '@/routes/admin';
 import { accept, destroy, index, reject } from '@/routes/admin/submissions';
+import { translateSubmissionStatus } from '@/lib/translations';
 import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 
 type AdminSubmission = {
@@ -15,20 +16,20 @@ type AdminSubmission = {
 export default function SubmissionsIndex({ submissions }: { submissions: LaravelPaginator<AdminSubmission> }) {
     return (
         <>
-            <Head title="Submissions" />
+            <Head title="المشاركات" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Submissions</h1>
+                <h1 className="text-lg font-semibold">المشاركات</h1>
 
                 <DataTable
                     columns={[
-                        { header: 'Competition', cell: (s: AdminSubmission) => s.competition?.title ?? '—' },
-                        { header: 'Participant', cell: (s: AdminSubmission) => s.participant?.name ?? '—' },
+                        { header: 'المسابقة', cell: (s: AdminSubmission) => s.competition?.title ?? '—' },
+                        { header: 'المشارك', cell: (s: AdminSubmission) => s.participant?.name ?? '—' },
                         {
-                            header: 'Status',
-                            cell: (s: AdminSubmission) => <Badge variant="secondary">{s.status}</Badge>,
+                            header: 'الحالة',
+                            cell: (s: AdminSubmission) => <Badge variant="secondary">{translateSubmissionStatus(s.status)}</Badge>,
                         },
                         {
-                            header: 'Actions',
+                            header: 'إجراءات',
                             cell: (s: AdminSubmission) => (
                                 <div className="flex gap-2">
                                     <button
@@ -36,25 +37,25 @@ export default function SubmissionsIndex({ submissions }: { submissions: Laravel
                                         className="text-sm underline"
                                         onClick={() => router.patch(accept.url({ submission: s.id }))}
                                     >
-                                        Accept
+                                        قبول
                                     </button>
                                     <button
                                         type="button"
                                         className="text-sm underline"
                                         onClick={() => router.patch(reject.url({ submission: s.id }))}
                                     >
-                                        Reject
+                                        رفض
                                     </button>
                                     <button
                                         type="button"
                                         className="text-destructive text-sm underline"
                                         onClick={() => {
-                                            if (confirm('Delete this submission?')) {
+                                            if (confirm('حذف هذه المشاركة؟')) {
                                                 router.delete(destroy.url({ submission: s.id }));
                                             }
                                         }}
                                     >
-                                        Delete
+                                        حذف
                                     </button>
                                 </div>
                             ),
@@ -69,7 +70,7 @@ export default function SubmissionsIndex({ submissions }: { submissions: Laravel
 
 SubmissionsIndex.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Submissions', href: index() },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'المشاركات', href: index() },
     ] as BreadcrumbItem[],
 };

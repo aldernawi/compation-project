@@ -22,37 +22,37 @@ export default function PrizesIndex({
 }) {
     return (
         <>
-            <Head title={`Prizes — ${competition.title}`} />
+            <Head title={`الجوائز — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
                 <div className="flex items-center justify-between">
-                    <h1 className="text-lg font-semibold">Prizes for {competition.title}</h1>
+                    <h1 className="text-lg font-semibold">جوائز {competition.title}</h1>
                     <Button asChild>
-                        <Link href={create({ competition: competition.id })}>New Prize</Link>
+                        <Link href={create({ competition: competition.id })}>جائزة جديدة</Link>
                     </Button>
                 </div>
 
                 <DataTable
                     columns={[
-                        { header: 'Rank', cell: (prize: AdminPrize) => prize.rank },
-                        { header: 'Title', cell: (prize: AdminPrize) => prize.title },
-                        { header: 'Winners', cell: (prize: AdminPrize) => prize.winners_count },
+                        { header: 'المرتبة', cell: (prize: AdminPrize) => prize.rank },
+                        { header: 'العنوان', cell: (prize: AdminPrize) => prize.title },
+                        { header: 'الفائزون', cell: (prize: AdminPrize) => prize.winners_count },
                         {
-                            header: 'Actions',
+                            header: 'إجراءات',
                             cell: (prize: AdminPrize) => (
                                 <div className="flex gap-2">
                                     <Link href={edit({ competition: competition.id, prize: prize.id })} className="text-sm underline">
-                                        Edit
+                                        تعديل
                                     </Link>
                                     <button
                                         type="button"
                                         className="text-destructive text-sm underline"
                                         onClick={() => {
-                                            if (confirm('Delete this prize?')) {
+                                            if (confirm('حذف هذه الجائزة؟')) {
                                                 router.delete(destroy.url({ competition: competition.id, prize: prize.id }));
                                             }
                                         }}
                                     >
-                                        Delete
+                                        حذف
                                     </button>
                                 </div>
                             ),
@@ -67,8 +67,8 @@ export default function PrizesIndex({
 
 PrizesIndex.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Competitions', href: competitionsIndex() },
-        { title: 'Prizes', href: '#' },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'المسابقات', href: competitionsIndex() },
+        { title: 'الجوائز', href: '#' },
     ] as BreadcrumbItem[],
 };

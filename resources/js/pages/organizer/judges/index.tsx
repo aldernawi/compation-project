@@ -21,9 +21,9 @@ export default function JudgesIndex({
 
     return (
         <>
-            <Head title={`Judges — ${competition.title}`} />
+            <Head title={`الحكام — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Judges for {competition.title}</h1>
+                <h1 className="text-lg font-semibold">حكام {competition.title}</h1>
 
                 <form
                     className="flex items-end gap-2"
@@ -38,7 +38,7 @@ export default function JudgesIndex({
                         required
                         className="border-input h-9 rounded-md border bg-transparent px-2 text-sm"
                     >
-                        <option value="">Select a judge…</option>
+                        <option value="">اختر حَكَماً…</option>
                         {availableJudges.map((judge) => (
                             <option key={judge.id} value={judge.id}>
                                 {judge.name}
@@ -46,16 +46,16 @@ export default function JudgesIndex({
                         ))}
                     </select>
                     <Button type="submit" disabled={processing}>
-                        Assign Judge
+                        تعيين حَكَم
                     </Button>
                 </form>
 
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Email</TableHead>
-                            <TableHead>Actions</TableHead>
+                            <TableHead>الاسم</TableHead>
+                            <TableHead>البريد الإلكتروني</TableHead>
+                            <TableHead>إجراءات</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -68,12 +68,12 @@ export default function JudgesIndex({
                                         type="button"
                                         className="text-destructive text-sm underline"
                                         onClick={() => {
-                                            if (confirm('Remove this judge from the competition?')) {
+                                            if (confirm('إزالة هذا الحَكَم من المسابقة؟')) {
                                                 router.delete(destroy.url({ competition: competition.id, judge: judge.id }));
                                             }
                                         }}
                                     >
-                                        Remove
+                                        إزالة
                                     </button>
                                 </TableCell>
                             </TableRow>
@@ -87,8 +87,8 @@ export default function JudgesIndex({
 
 JudgesIndex.layout = {
     breadcrumbs: [
-        { title: 'Organizer Dashboard', href: dashboard() },
-        { title: 'My Competitions', href: competitionsIndex() },
-        { title: 'Judges', href: '#' },
+        { title: 'لوحة تحكم المنظم', href: dashboard() },
+        { title: 'مسابقاتي', href: competitionsIndex() },
+        { title: 'الحكام', href: '#' },
     ] as BreadcrumbItem[],
 };

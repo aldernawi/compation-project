@@ -26,17 +26,17 @@ export default function RankingsIndex({
 }) {
     return (
         <>
-            <Head title={`Rankings — ${competition.title}`} />
+            <Head title={`الترتيب — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Rankings for {competition.title}</h1>
+                <h1 className="text-lg font-semibold">ترتيب {competition.title}</h1>
 
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Rank</TableHead>
-                            <TableHead>Participant</TableHead>
-                            <TableHead>Average Score</TableHead>
-                            <TableHead>Judge Scores</TableHead>
+                            <TableHead>المرتبة</TableHead>
+                            <TableHead>المشارك</TableHead>
+                            <TableHead>متوسط الدرجة</TableHead>
+                            <TableHead>درجات الحكام</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -49,7 +49,7 @@ export default function RankingsIndex({
                                     {submission.evaluations.length === 0
                                         ? '—'
                                         : submission.evaluations
-                                              .map((evaluation) => `${evaluation.judge?.name ?? 'Unknown'}: ${evaluation.score ?? '—'}`)
+                                              .map((evaluation) => `${evaluation.judge?.name ?? 'غير معروف'}: ${evaluation.score ?? '—'}`)
                                               .join(', ')}
                                 </TableCell>
                             </TableRow>
@@ -63,8 +63,8 @@ export default function RankingsIndex({
 
 RankingsIndex.layout = {
     breadcrumbs: [
-        { title: 'Organizer Dashboard', href: dashboard() },
-        { title: 'My Competitions', href: competitionsIndex() },
-        { title: 'Rankings', href: '#' },
+        { title: 'لوحة تحكم المنظم', href: dashboard() },
+        { title: 'مسابقاتي', href: competitionsIndex() },
+        { title: 'الترتيب', href: '#' },
     ] as BreadcrumbItem[],
 };

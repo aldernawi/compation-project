@@ -22,6 +22,12 @@ class CompetitionResource extends JsonResource
             'status' => $this->status->value,
             'starts_at' => $this->starts_at,
             'ends_at' => $this->ends_at,
+            'requires_approval' => $this->requires_approval,
+            'evaluation_method' => $this->evaluation_method,
+            'organizer' => $this->whenLoaded('organizer', fn () => [
+                'id' => $this->organizer->id,
+                'name' => $this->organizer->name,
+            ]),
             'competition_type' => $this->whenLoaded('competitionType', fn () => [
                 'id' => $this->competitionType->id,
                 'name' => $this->competitionType->name,

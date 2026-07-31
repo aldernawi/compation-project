@@ -38,9 +38,9 @@ export default function ReportsIndex({
 }) {
     return (
         <>
-            <Head title="Reports" />
+            <Head title="التقارير" />
             <div className="flex h-full flex-1 flex-col gap-6 p-4">
-                <h1 className="text-lg font-semibold">Reports & Statistics</h1>
+                <h1 className="text-lg font-semibold">التقارير والإحصائيات</h1>
 
                 <form
                     className="flex items-end gap-2"
@@ -54,22 +54,22 @@ export default function ReportsIndex({
                     }}
                 >
                     <div className="grid gap-2">
-                        <Label htmlFor="from">From</Label>
+                        <Label htmlFor="from">من</Label>
                         <Input id="from" type="date" name="from" defaultValue={filters.from ?? ''} />
                     </div>
                     <div className="grid gap-2">
-                        <Label htmlFor="to">To</Label>
+                        <Label htmlFor="to">إلى</Label>
                         <Input id="to" type="date" name="to" defaultValue={filters.to ?? ''} />
                     </div>
-                    <Button type="submit">Filter</Button>
+                    <Button type="submit">تصفية</Button>
                 </form>
 
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                     {[
-                        { label: 'Competitions', value: stats.competitions_count },
-                        { label: 'Participants', value: stats.participants_count },
-                        { label: 'Submissions', value: stats.submissions_count },
-                        { label: 'Winners', value: stats.winners_count },
+                        { label: 'المسابقات', value: stats.competitions_count },
+                        { label: 'المشاركون', value: stats.participants_count },
+                        { label: 'المشاركات', value: stats.submissions_count },
+                        { label: 'الفائزون', value: stats.winners_count },
                     ].map((stat) => (
                         <div key={stat.label} className="rounded-xl border border-sidebar-border/70 p-4 dark:border-sidebar-border">
                             <p className="text-muted-foreground text-sm">{stat.label}</p>
@@ -79,12 +79,12 @@ export default function ReportsIndex({
                 </div>
 
                 <div>
-                    <h2 className="mb-2 text-base font-semibold">Most Participated Competitions</h2>
+                    <h2 className="mb-2 text-base font-semibold">أكثر المسابقات مشاركة</h2>
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Competition</TableHead>
-                                <TableHead>Submissions</TableHead>
+                                <TableHead>المسابقة</TableHead>
+                                <TableHead>المشاركات</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -99,12 +99,12 @@ export default function ReportsIndex({
                 </div>
 
                 <div>
-                    <h2 className="mb-2 text-base font-semibold">Submissions by Competition Type</h2>
+                    <h2 className="mb-2 text-base font-semibold">المشاركات حسب نوع المسابقة</h2>
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Type</TableHead>
-                                <TableHead>Count</TableHead>
+                                <TableHead>النوع</TableHead>
+                                <TableHead>العدد</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -124,7 +124,7 @@ export default function ReportsIndex({
 
 ReportsIndex.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Reports', href: index() },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'التقارير', href: index() },
     ] as BreadcrumbItem[],
 };

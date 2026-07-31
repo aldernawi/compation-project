@@ -5,12 +5,12 @@ import type { BreadcrumbItem } from '@/types';
 export default function AdminDashboard() {
     return (
         <>
-            <Head title="Admin Dashboard" />
+            <Head title="لوحة تحكم المدير" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
                 <div className="rounded-xl border border-sidebar-border/70 p-6 dark:border-sidebar-border">
-                    <h1 className="text-lg font-semibold">Welcome, Admin</h1>
+                    <h1 className="text-lg font-semibold">مرحباً أيها المدير</h1>
                     <p className="text-muted-foreground text-sm">
-                        This is your dashboard. Resource management will appear here.
+                        هذه لوحة التحكم الخاصة بك. ستظهر هنا إدارة الموارد.
                     </p>
                 </div>
             </div>
@@ -19,5 +19,5 @@ export default function AdminDashboard() {
 }
 
 AdminDashboard.layout = {
-    breadcrumbs: [{ title: 'Admin Dashboard', href: dashboard() }] as BreadcrumbItem[],
+    breadcrumbs: [{ title: 'لوحة تحكم المدير', href: dashboard() }] as BreadcrumbItem[],
 };

@@ -1,7 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart3, BookOpen, FileText, FolderGit2, LayoutGrid, Tags, Trophy, Users } from 'lucide-react';
+import { BarChart3, FileText, LayoutGrid, Tags, Trophy, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -27,35 +26,22 @@ import { index as organizerCompetitionsIndex } from '@/routes/organizer/competit
 import type { NavItem, User } from '@/types';
 
 const adminNavItems: NavItem[] = [
-    { title: 'Dashboard', href: adminDashboard(), icon: LayoutGrid },
-    { title: 'Users', href: adminUsersIndex(), icon: Users },
-    { title: 'Competition Types', href: adminCompetitionTypesIndex(), icon: Tags },
-    { title: 'Competitions', href: adminCompetitionsIndex(), icon: Trophy },
-    { title: 'Submissions', href: adminSubmissionsIndex(), icon: FileText },
-    { title: 'Reports', href: adminReportsIndex(), icon: BarChart3 },
+    { title: 'الرئيسية', href: adminDashboard(), icon: LayoutGrid },
+    { title: 'المستخدمون', href: adminUsersIndex(), icon: Users },
+    { title: 'أنواع المسابقات', href: adminCompetitionTypesIndex(), icon: Tags },
+    { title: 'المسابقات', href: adminCompetitionsIndex(), icon: Trophy },
+    { title: 'المشاركات', href: adminSubmissionsIndex(), icon: FileText },
+    { title: 'التقارير', href: adminReportsIndex(), icon: BarChart3 },
 ];
 
 const organizerNavItems: NavItem[] = [
-    { title: 'Dashboard', href: organizerDashboard(), icon: LayoutGrid },
-    { title: 'My Competitions', href: organizerCompetitionsIndex(), icon: Trophy },
+    { title: 'الرئيسية', href: organizerDashboard(), icon: LayoutGrid },
+    { title: 'مسابقاتي', href: organizerCompetitionsIndex(), icon: Trophy },
 ];
 
 const judgeNavItems: NavItem[] = [
-    { title: 'Dashboard', href: judgeDashboard(), icon: LayoutGrid },
-    { title: 'Assigned Competitions', href: judgeCompetitionsIndex(), icon: Trophy },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
+    { title: 'الرئيسية', href: judgeDashboard(), icon: LayoutGrid },
+    { title: 'المسابقات المعينة', href: judgeCompetitionsIndex(), icon: Trophy },
 ];
 
 function navItemsForRole(role: User['role'] | undefined): NavItem[] {
@@ -76,7 +62,7 @@ export function AppSidebar() {
     const navItems = navItemsForRole(auth.user?.role);
 
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="inset" side="right">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -94,7 +80,6 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

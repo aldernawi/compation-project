@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { dashboard } from '@/routes/organizer';
 import { index as competitionsIndex } from '@/routes/organizer/competitions';
 import { accept, index, reject } from '@/routes/organizer/competitions/submissions';
+import { translateSubmissionStatus, submissionStatusLabels } from '@/lib/translations';
 import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 
 type SubmissionStatus = 'submitted' | 'under_review' | 'accepted' | 'rejected' | 'under_evaluation' | 'evaluated';
@@ -27,9 +28,9 @@ export default function SubmissionsIndex({
 }) {
     return (
         <>
-            <Head title={`Submissions — ${competition.title}`} />
+            <Head title={`المشاركات — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Submissions for {competition.title}</h1>
+                <h1 className="text-lg font-semibold">مشاركات {competition.title}</h1>
 
                 <select
                     value={filters.status ?? ''}
@@ -40,23 +41,23 @@ export default function SubmissionsIndex({
                     }
                     className="border-input h-9 w-fit rounded-md border bg-transparent px-2 text-sm"
                 >
-                    <option value="">All statuses</option>
+                    <option value="">جميع الحالات</option>
                     {STATUSES.map((status) => (
                         <option key={status} value={status}>
-                            {status}
+                            {submissionStatusLabels[status] ?? status}
                         </option>
                     ))}
                 </select>
 
                 <DataTable
                     columns={[
-                        { header: 'Participant', cell: (s: OrganizerSubmission) => s.participant?.name ?? '—' },
+                        { header: 'المشارك', cell: (s: OrganizerSubmission) => s.participant?.name ?? '—' },
                         {
-                            header: 'Status',
-                            cell: (s: OrganizerSubmission) => <Badge variant="secondary">{s.status}</Badge>,
+                            header: 'الحالة',
+                            cell: (s: OrganizerSubmission) => <Badge variant="secondary">{translateSubmissionStatus(s.status)}</Badge>,
                         },
                         {
-                            header: 'Actions',
+                            header: 'إجراءات',
                             cell: (s: OrganizerSubmission) => (
                                 <div className="flex gap-2">
                                     <button
@@ -66,13 +67,13 @@ export default function SubmissionsIndex({
                                             router.patch(accept.url({ competition: competition.id, submission: s.id }))
                                         }
                                     >
-                                        Accept
+                                        قبول
                                     </button>
                                     <button
                                         type="button"
                                         className="text-destructive text-sm underline"
                                         onClick={() => {
-                                            const reason = prompt('Reason for rejection:');
+                                            const reason = prompt('سبب الرفض:');
 
                                             if (reason) {
                                                 router.patch(
@@ -82,7 +83,7 @@ export default function SubmissionsIndex({
                                             }
                                         }}
                                     >
-                                        Reject
+                                        رفض
                                     </button>
                                 </div>
                             ),
@@ -97,8 +98,8 @@ export default function SubmissionsIndex({
 
 SubmissionsIndex.layout = {
     breadcrumbs: [
-        { title: 'Organizer Dashboard', href: dashboard() },
-        { title: 'My Competitions', href: competitionsIndex() },
-        { title: 'Submissions', href: '#' },
+        { title: 'لوحة تحكم المنظم', href: dashboard() },
+        { title: 'مسابقاتي', href: competitionsIndex() },
+        { title: 'المشاركات', href: '#' },
     ] as BreadcrumbItem[],
 };

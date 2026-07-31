@@ -14,21 +14,21 @@ type SelectOption = { id: number; name: string };
 export default function CreateCompetition({ competitionTypes }: { competitionTypes: SelectOption[] }) {
     return (
         <>
-            <Head title="New Competition" />
+            <Head title="مسابقة جديدة" />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">New Competition</h1>
+                <h1 className="text-lg font-semibold">مسابقة جديدة</h1>
 
                 <Form {...CompetitionController.store.form()} className="max-w-xl space-y-6">
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="title">Title</Label>
+                                <Label htmlFor="title">العنوان</Label>
                                 <Input id="title" name="title" required />
                                 <InputError message={errors.title} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="competition_type_id">Competition Type</Label>
+                                <Label htmlFor="competition_type_id">نوع المسابقة</Label>
                                 <select
                                     id="competition_type_id"
                                     name="competition_type_id"
@@ -45,43 +45,43 @@ export default function CreateCompetition({ competitionTypes }: { competitionTyp
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="description">Description</Label>
+                                <Label htmlFor="description">الوصف</Label>
                                 <Input id="description" name="description" />
                                 <InputError message={errors.description} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="terms">Terms</Label>
+                                <Label htmlFor="terms">الشروط</Label>
                                 <Input id="terms" name="terms" />
                                 <InputError message={errors.terms} />
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="starts_at">Starts At</Label>
+                                    <Label htmlFor="starts_at">تاريخ البداية</Label>
                                     <Input id="starts_at" type="datetime-local" name="starts_at" required />
                                     <InputError message={errors.starts_at} />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="ends_at">Ends At</Label>
+                                    <Label htmlFor="ends_at">تاريخ النهاية</Label>
                                     <Input id="ends_at" type="datetime-local" name="ends_at" required />
                                     <InputError message={errors.ends_at} />
                                 </div>
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="evaluation_method">Evaluation Method</Label>
+                                <Label htmlFor="evaluation_method">طريقة التقييم</Label>
                                 <Input id="evaluation_method" name="evaluation_method" defaultValue="average_score" required />
                                 <InputError message={errors.evaluation_method} />
                             </div>
 
                             <div className="flex items-center gap-2">
                                 <Checkbox id="requires_approval" name="requires_approval" defaultChecked value="1" />
-                                <Label htmlFor="requires_approval">Requires my approval before accepting submissions</Label>
+                                <Label htmlFor="requires_approval">يتطلب موافقتي قبل قبول المشاركات</Label>
                             </div>
 
                             <Button type="submit" disabled={processing}>
-                                Create
+                                إنشاء
                             </Button>
                         </>
                     )}
@@ -93,8 +93,8 @@ export default function CreateCompetition({ competitionTypes }: { competitionTyp
 
 CreateCompetition.layout = {
     breadcrumbs: [
-        { title: 'Organizer Dashboard', href: dashboard() },
-        { title: 'My Competitions', href: index() },
-        { title: 'New', href: CompetitionController.create.url() },
+        { title: 'لوحة تحكم المنظم', href: dashboard() },
+        { title: 'مسابقاتي', href: index() },
+        { title: 'جديد', href: CompetitionController.create.url() },
     ] as BreadcrumbItem[],
 };

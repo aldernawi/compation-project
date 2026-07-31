@@ -25,9 +25,9 @@ export default function EditPrize({
 }) {
     return (
         <>
-            <Head title={`Edit Prize — ${competition.title}`} />
+            <Head title={`تعديل الجائزة — ${competition.title}`} />
             <div className="flex h-full flex-1 flex-col gap-4 p-4">
-                <h1 className="text-lg font-semibold">Edit Prize for {competition.title}</h1>
+                <h1 className="text-lg font-semibold">تعديل جائزة {competition.title}</h1>
 
                 <Form
                     {...PrizeController.update.form({ competition: competition.id, prize: prize.id })}
@@ -36,25 +36,25 @@ export default function EditPrize({
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="title">Title</Label>
+                                <Label htmlFor="title">العنوان</Label>
                                 <Input id="title" name="title" defaultValue={prize.title} required />
                                 <InputError message={errors.title} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="description">Description</Label>
+                                <Label htmlFor="description">الوصف</Label>
                                 <Input id="description" name="description" defaultValue={prize.description ?? ''} />
                                 <InputError message={errors.description} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="rank">Rank</Label>
+                                <Label htmlFor="rank">المرتبة</Label>
                                 <Input id="rank" type="number" name="rank" min={1} defaultValue={prize.rank} required />
                                 <InputError message={errors.rank} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="winners_count">Winners Count</Label>
+                                <Label htmlFor="winners_count">عدد الفائزين</Label>
                                 <Input
                                     id="winners_count"
                                     type="number"
@@ -67,7 +67,7 @@ export default function EditPrize({
                             </div>
 
                             <Button type="submit" disabled={processing}>
-                                Save
+                                حفظ
                             </Button>
                         </>
                     )}
@@ -79,8 +79,8 @@ export default function EditPrize({
 
 EditPrize.layout = {
     breadcrumbs: [
-        { title: 'Admin Dashboard', href: dashboard() },
-        { title: 'Competitions', href: competitionsIndex() },
-        { title: 'Edit Prize', href: '#' },
+        { title: 'لوحة تحكم المدير', href: dashboard() },
+        { title: 'المسابقات', href: competitionsIndex() },
+        { title: 'تعديل الجائزة', href: '#' },
     ] as BreadcrumbItem[],
 };
