@@ -28,3 +28,20 @@ yarn-error.log
 /.vscode
 /.zed
 /.playwright-mcp
+
+# Temporary report and conversion files
+*.docx
+*.doc
+~$*
+__pycache__/
+content_map*.py
+content_map*.txt
+doc_content.txt
+env
+modify_*.py
+para_info.json
+ref_content.txt
+remaining_*.txt
+smart_content.txt
+*.py
+diagrams/
