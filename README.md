@@ -1,138 +1,138 @@
-# Competition Management Platform
+# منصة إدارة المسابقات
 
-A comprehensive, role-based web and mobile platform for organizing, managing, and evaluating competitions. Built with Laravel, Inertia.js, React, and Tailwind CSS, it supports Arabic localization, Libyan Dinar (LYD) currency, registration-only competitions, and a dedicated mobile application.
+منصة ويب متكاملة مع تطبيق موبايل لإدارة وتنظيم وتقييم المسابقات. تم بناؤها باستخدام Laravel و Inertia.js و React و Tailwind CSS، وتدعم اللغة العربية والدينار الليبي (LYD) وتسجيل الدخول المطلوب للمشاركة في المسابقات، بالإضافة إلى تطبيق موبايل خاص.
 
 ---
 
-## Table of Contents
+## فهرس المحتويات
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Architecture & Tech Stack](#architecture--tech-stack)
-4. [Project Structure](#project-structure)
-5. [Requirements](#requirements)
-6. [Installation](#installation)
-7. [Configuration](#configuration)
-8. [Database](#database)
-9. [Usage](#usage)
+1. [نظرة عامة](#نظرة-عامة)
+2. [الميزات](#الميزات)
+3. [الهيكل التقني والتقنيات المستخدمة](#الهيكل-التقني-والتقنيات-المستخدمة)
+4. [هيكل المشروع](#هيكل-المشروع)
+5. [المتطلبات](#المتطلبات)
+6. [التثبيت](#التثبيت)
+7. [الإعدادات](#الإعدادات)
+8. [قاعدة البيانات](#قاعدة-البيانات)
+9. [طريقة الاستخدام](#طريقة-الاستخدام)
 10. [API](#api)
-11. [User Roles & Permissions](#user-roles--permissions)
-12. [Mobile Application](#mobile-application)
-13. [Testing](#testing)
-14. [Deployment](#deployment)
-15. [Security](#security)
-16. [License](#license)
+11. [أدوار المستخدمين والصلاحيات](#أدوار-المستخدمين-والصلاحيات)
+12. [تطبيق الموبايل](#تطبيق-الموبايل)
+13. [الاختبارات](#الاختبارات)
+14. [النشر](#النشر)
+15. [الأمان](#الأمان)
+16. [الترخيص](#الترخيص)
 
 ---
 
-## Overview
+## نظرة عامة
 
-The Competition Management Platform streamlines the lifecycle of competitions — from creation and registration to submission, evaluation, ranking, and reporting. It provides dedicated dashboards for administrators, organizers, judges, and participants, ensuring each role has the tools needed for their responsibilities.
+منصة إدارة المسابقات تبسّط دورة حياة المسابقة الكاملة — من الإنشاء والتسجيل إلى تقديم الأعمال والتقييم والترتيب وإصدار التقارير. توفر لوحات تحكم مخصصة للإداريين والمنظمين والحكام والمشاركين، بحيث يمتلك كل دور الأدوات التي يحتاجها لإنجاز مهامه.
 
-Key highlights:
+أبرز المميزات:
 
-- Arabic-first localization with Libyan Dinar (LYD) support.
-- Registration-only competition access for authenticated users.
-- Role-based dashboards and permissions.
-- REST API for mobile and external integrations.
-- Push notifications via FCM tokens.
-- Media handling for submissions and reports.
-- Modern React frontend powered by Inertia.js.
-
----
-
-## Features
-
-### Competition Management
-
-- Create and categorize competitions with custom types.
-- Configure prizes, dates, and registration requirements.
-- Publish and unpublish competitions.
-- Publish results with timestamps.
-- Support registration-only participation.
-
-### Submissions & Evaluations
-
-- Participants submit entries and attachments.
-- Judges evaluate submissions with structured criteria.
-- Track evaluation status and rejection reasons.
-- Publish final results and generate rankings.
-
-### Prizes & Rankings
-
-- Define prizes per competition.
-- Associate prizes with winning submissions.
-- Compute and display rankings by score.
-
-### User Management
-
-- Role-based users: Admin, Organizer, Judge, Participant.
-- Profile and security settings.
-- Phone number support and account suspension.
-- Passkey support for modern authentication.
-
-### Reporting & Notifications
-
-- Admin and organizer reports.
-- FCM push notifications.
-- Notifications for results, submissions, and deadlines.
-
-### Localization & Currency
-
-- Arabic user interface and messaging.
-- Libyan Dinar (LYD) currency formatting.
-- Right-to-left (RTL) layout support.
+- توطين عربي مع دعم الدينار الليبي (LYD).
+- اشتراط التسجيل للمشاركة في المسابقات.
+- لوحات تحكم مبنية على الأدوار والصلاحيات.
+- REST API للموبايل والتكاملات الخارجية.
+- إشعارات فورية عبر FCM tokens.
+- إدارة الملفات المرفقة للمشاركات والتقارير.
+- واجهة أمامية حديثة باستخدام React و Inertia.js.
 
 ---
 
-## Architecture & Tech Stack
+## الميزات
 
-| Layer | Technology |
-|-------|------------|
-| Backend Framework | Laravel 13 (PHP 8.5) |
-| Frontend Framework | React 19 |
-| SPA Bridge | Inertia.js 3 |
-| Styling | Tailwind CSS 4 |
-| API Authentication | Laravel Sanctum 4 |
-| Web Authentication | Laravel Fortify 1 |
-| Testing | Pest 4 / PHPUnit 12 |
-| Database | MySQL / PostgreSQL / SQLite (configurable) |
-| Queue | Laravel Queues / Database driver |
-| Cache | Laravel Cache / Database driver |
-| Type-Safe Routes | Laravel Wayfinder 0 |
-| Mobile App | Located in `mobile/` |
+### إدارة المسابقات
+
+- إنشاء وتصنيف المسابقات مع أنواع مخصصة.
+- إعداد الجوائز والتواريخ ومتطلبات التسجيل.
+- نشر وإخفاء المسابقات.
+- نشر النتائج مع تحديد وقت النشر.
+- دعم المسابقات التي تتطلب تسجيل مسبق.
+
+### المشاركات والتقييم
+
+- تقديم المشاركين لأعمالهم مع المرفقات.
+- تقييم الحكام للمشاركات حسب معايير محددة.
+- متابعة حالة التقييم وأسباب الرفض.
+- نشر النتائج النهائية وإنشاء الترتيب.
+
+### الجوائز والترتيب
+
+- تحديد جوائز لكل مسابقة.
+- ربط الجوائز بالمشاركات الفائزة.
+- حساب وعرض الترتيب حسب النقاط.
+
+### إدارة المستخدمين
+
+- أدوار متعددة: Admin، Organizer، Judge، Participant.
+- إعدادات الملف الشخصي والأمان.
+- دعم رقم الهاتف وتعليق الحسابات.
+- دعم Passkeys للمصادقة الحديثة.
+
+### التقارير والإشعارات
+
+- تقارير للإداريين والمنظمين.
+- إشعارات فورية عبر FCM.
+- إشعارات للنتائج والمشاركات ومواعيد المسابقات.
+
+### التوطين والعملة
+
+- واجهة عربية ورسائل عربية.
+- تنسيق العملة بالدينار الليبي (LYD).
+- دعم تخطيط من اليمين إلى اليسار (RTL).
 
 ---
 
-## Project Structure
+## الهيكل التقني والتقنيات المستخدمة
+
+| الطبقة | التقنية |
+|--------|---------|
+| إطار العمل للخلفية | Laravel 13 (PHP 8.5) |
+| إطار العمل للواجهة الأمامية | React 19 |
+| ربط SPA | Inertia.js 3 |
+| التنسيق | Tailwind CSS 4 |
+| مصادقة API | Laravel Sanctum 4 |
+| مصادقة الويب | Laravel Fortify 1 |
+| الاختبارات | Pest 4 / PHPUnit 12 |
+| قاعدة البيانات | MySQL / PostgreSQL / SQLite (قابلة للإعداد) |
+| قائمة الانتظار | Laravel Queues / Database driver |
+| الذاكرة المؤقتة | Laravel Cache / Database driver |
+| مسارات من نوع TypeScript | Laravel Wayfinder 0 |
+| تطبيق الموبايل | داخل مجلد `mobile/` |
+
+---
+
+## هيكل المشروع
 
 ```
 ├── app/
 │   ├── Http/
-│   │   ├── Controllers/Admin/      # Admin dashboard controllers
-│   │   ├── Controllers/Organizer/  # Organizer dashboard controllers
-│   │   ├── Controllers/Judge/      # Judge dashboard controllers
-│   │   ├── Controllers/Settings/   # Profile and security controllers
-│   │   └── Controllers/Api/        # REST API controllers
-│   ├── Models/                     # Eloquent models
+│   │   ├── Controllers/Admin/      # متحكمات لوحة الإدارة
+│   │   ├── Controllers/Organizer/  # متحكمات لوحة المنظم
+│   │   ├── Controllers/Judge/      # متحكمات لوحة الحكم
+│   │   ├── Controllers/Settings/   # متحكمات الملف والأمان
+│   │   └── Controllers/Api/        # متحكمات API
+│   ├── Models/                     # نماذج Eloquent
 │   └── ...
-├── bootstrap/                      # Application bootstrap files
-├── config/                         # Configuration files
+├── bootstrap/                      # ملفات بدء التشغيل
+├── config/                         # ملفات الإعداد
 ├── database/
-│   ├── factories/                  # Model factories
-│   ├── migrations/                 # Database migrations
-│   └── seeders/                    # Database seeders
-├── mobile/                         # Mobile application source
-├── public/                         # Public assets
+│   ├── factories/                  # المصانع
+│   ├── migrations/                 # ملفات الهجرة
+│   └── seeders/                    # ملفات التعبئة
+├── mobile/                         # تطبيق الموبايل
+├── public/                         # الأصول العامة
 ├── resources/
-│   ├── js/                         # React / Inertia pages and components
-│   └── css/                        # Tailwind styles
+│   ├── js/                         # صفحات ومكونات React / Inertia
+│   └── css/                        # أنماط Tailwind
 ├── routes/
-│   ├── web.php                     # Inertia / web routes
-│   └── api.php                     # API routes
-├── storage/                        # Logs, uploads, caches
-├── tests/                          # Pest / PHPUnit tests
-├── .env.example                    # Environment template
+│   ├── web.php                     # مسارات الويب / Inertia
+│   └── api.php                     # مسارات API
+├── storage/                        # السجلات والرفوعات والذاكرة المؤقتة
+├── tests/                          # اختبارات Pest / PHPUnit
+├── .env.example                    # نموذج بيئة العمل
 ├── composer.json
 ├── package.json
 └── vite.config.js
@@ -140,39 +140,39 @@ Key highlights:
 
 ---
 
-## Requirements
+## المتطلبات
 
-- PHP 8.5 or higher
+- PHP 8.5 أو أعلى
 - Composer 2.x
-- Node.js 20.x or higher
-- npm or Yarn
+- Node.js 20.x أو أعلى
+- npm أو Yarn
 - MySQL 8.0+ / PostgreSQL 14+ / SQLite 3
 - Git
 
 ---
 
-## Installation
+## التثبيت
 
-1. Clone the repository:
+1. استنساخ المستودع:
 
    ```bash
    git clone https://github.com/aldernawi/compation-project.git
    cd compation-project
    ```
 
-2. Install PHP dependencies:
+2. تثبيت اعتماديات PHP:
 
    ```bash
    composer install
    ```
 
-3. Install JavaScript dependencies:
+3. تثبيت اعتماديات JavaScript:
 
    ```bash
    npm install
    ```
 
-4. Generate Wayfinder typed routes:
+4. توليد مسارات Wayfinder:
 
    ```bash
    php artisan wayfinder:generate
@@ -180,24 +180,24 @@ Key highlights:
 
 ---
 
-## Configuration
+## الإعدادات
 
-1. Copy the environment file:
+1. نسخ ملف البيئة:
 
    ```bash
    cp .env.example .env
    ```
 
-2. Generate the application key:
+2. توليد مفتاح التطبيق:
 
    ```bash
    php artisan key:generate
    ```
 
-3. Update `.env` with your database, mail, FCM, and queue settings:
+3. تحديث ملف `.env` بإعدادات قاعدة البيانات والبريد و FCM وقائمة الانتظار:
 
    ```env
-   APP_NAME="Competition Management Platform"
+   APP_NAME="منصة إدارة المسابقات"
    APP_URL=http://localhost
 
    DB_CONNECTION=mysql
@@ -210,39 +210,39 @@ Key highlights:
    FCM_SERVER_KEY=your_fcm_key
    ```
 
-4. Build the frontend:
+4. بناء الواجهة الأمامية:
 
    ```bash
    npm run build
-   # or for development
+   # أو للتطوير
    npm run dev
    ```
 
 ---
 
-## Database
+## قاعدة البيانات
 
-Run migrations and seeders:
+تشغيل الهجرات والتعبئة:
 
 ```bash
 php artisan migrate
 php artisan db:seed
 ```
 
-For development with demo accounts:
+للتطوير مع حسابات تجريبية:
 
 ```bash
 php artisan db:seed --class=DatabaseSeeder
 ```
 
-### Core Tables
+### أهم الجداول
 
 - `users`
 - `competition_types`
 - `competitions`
 - `prizes`
 - `submissions`
-- `competition_judge` (pivot)
+- `competition_judge` (جدول وسيط)
 - `evaluations`
 - `notifications`
 - `media`
@@ -251,21 +251,21 @@ php artisan db:seed --class=DatabaseSeeder
 
 ---
 
-## Usage
+## طريقة الاستخدام
 
-Start the development server:
+تشغيل خادم التطوير:
 
 ```bash
 php artisan serve
 ```
 
-Run the Vite dev server in a separate terminal:
+تشغيل خادم Vite في نافذة منفصلة:
 
 ```bash
 npm run dev
 ```
 
-Open the application in your browser:
+افتح التطبيق في المتصفح:
 
 ```
 http://localhost:8000
@@ -275,33 +275,33 @@ http://localhost:8000
 
 ## API
 
-The platform exposes a REST API for mobile and third-party integrations, authenticated via Laravel Sanctum.
+تقدم المنصة REST API للموبايل والتكاملات الخارجية، مع مصادقة عبر Laravel Sanctum.
 
-### Authentication
+### المصادقة
 
 - `POST /api/register`
 - `POST /api/login`
 - `POST /api/logout`
 - `POST /api/profile`
 
-### Competitions
+### المسابقات
 
 - `GET /api/competitions`
 - `GET /api/competitions/{competition}`
 - `POST /api/competitions/{competition}/register`
 
-### Submissions
+### المشاركات
 
 - `GET /api/submissions`
 - `POST /api/submissions`
 - `GET /api/submissions/{submission}`
 
-### Notifications
+### الإشعارات
 
 - `GET /api/notifications`
 - `POST /api/notifications/read`
 
-For the complete list of routes, run:
+لمعرفة جميع المسارات:
 
 ```bash
 php artisan route:list
@@ -309,52 +309,52 @@ php artisan route:list
 
 ---
 
-## User Roles & Permissions
+## أدوار المستخدمين والصلاحيات
 
-| Role | Capabilities |
-|------|--------------|
-| **Admin** | Manage users, competitions, types, prizes, reports, and platform settings. |
-| **Organizer** | Create and manage competitions, assign judges, view submissions, publish results. |
-| **Judge** | Evaluate assigned submissions and view rankings. |
-| **Participant** | Register for competitions, submit entries, view results and rankings. |
-
----
-
-## Mobile Application
-
-A dedicated mobile application is included in the `mobile/` directory. Refer to `mobile/README.md` for setup instructions and platform-specific requirements.
+| الدور | الصلاحيات |
+|-------|-----------|
+| **Admin** | إدارة المستخدمين والمسابقات والأنواع والجوائز والتقارير وإعدادات المنصة. |
+| **Organizer** | إنشاء وإدارة المسابقات وتعيين الحكام وعرض المشاركات ونشر النتائج. |
+| **Judge** | تقييم المشاركات المخصصة له وعرض الترتيب. |
+| **Participant** | التسجيل في المسابقات وتقديم الأعمال وعرض النتائج والترتيب. |
 
 ---
 
-## Testing
+## تطبيق الموبايل
 
-The project uses Pest for unit and feature testing.
+يوجد تطبيق موبايل مخصص داخل مجلد `mobile/`. راجع `mobile/README.md` لتعليمات الإعداد والمتطلبات الخاصة بكل منصة.
 
-Run the full test suite:
+---
+
+## الاختبارات
+
+يستخدم المشروع Pest للاختبارات الوحدوية والوظيفية.
+
+تشغيل جميع الاختبارات:
 
 ```bash
 php artisan test
 ```
 
-Run a compact test summary:
+عرض ملخص مختصر:
 
 ```bash
 php artisan test --compact
 ```
 
-Run a specific test or filter:
+تشغيل اختبار معين:
 
 ```bash
 php artisan test --compact --filter=CompetitionTest
 ```
 
-Run static analysis with Larastan:
+تحليل الكود الثابت باستخدام Larastan:
 
 ```bash
 vendor/bin/phpstan analyse
 ```
 
-Format PHP code with Pint:
+تنسيق كود PHP باستخدام Pint:
 
 ```bash
 vendor/bin/pint
@@ -362,13 +362,13 @@ vendor/bin/pint
 
 ---
 
-## Deployment
+## النشر
 
-The recommended deployment target is [Laravel Cloud](https://cloud.laravel.com/).
+المنصة المقترحة للنشر هي [Laravel Cloud](https://cloud.laravel.com/).
 
-For traditional deployment:
+للنشر التقليدي:
 
-1. Install dependencies on the server:
+1. تثبيت الاعتماديات على الخادم:
 
    ```bash
    composer install --no-dev --optimize-autoloader
@@ -376,15 +376,15 @@ For traditional deployment:
    npm run build
    ```
 
-2. Set environment variables in `.env` on the server.
+2. ضبط متغيرات البيئة في ملف `.env` على الخادم.
 
-3. Run migrations:
+3. تشغيل الهجرات:
 
    ```bash
    php artisan migrate --force
    ```
 
-4. Optimize the application:
+4. تحسين أداء التطبيق:
 
    ```bash
    php artisan config:cache
@@ -392,20 +392,20 @@ For traditional deployment:
    php artisan view:cache
    ```
 
-5. Configure the web server (Nginx or Apache) to serve the `public/` directory.
+5. إعداد خادم الويب (Nginx أو Apache) لخدمة مجلد `public/`.
 
 ---
 
-## Security
+## الأمان
 
-- Never commit `.env` or API keys to version control.
-- Keep dependencies updated.
-- Use strong passwords and enable passkeys where possible.
-- Validate and authorize all API requests.
-- Store user uploads outside the web root or use Laravel's storage abstraction.
+- لا تُرفع ملفات `.env` أو مفاتيح API إلى مستودع Git.
+- حدّث الاعتماديات باستمرار.
+- استخدم كلمات مرور قوية وفعّل Passkeys عند الإمكان.
+- تحقق من صلاحيات جميع طلبات API.
+- احفظ الملفات المرفوعة خارج جذر الويب أو استخدم التخزين المخصص في Laravel.
 
 ---
 
-## License
+## الترخيص
 
-This project is open-source and available under the [MIT License](LICENSE).
+هذا المشروع مفتوح المصدر ومتاح بموجب [ترخيص MIT](LICENSE).
