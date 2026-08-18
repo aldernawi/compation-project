@@ -14,7 +14,7 @@ type EvaluableSubmission = {
     text_content: string | null;
     link_url: string | null;
     media_url: string | null;
-    participant: { id: number; name: string } | null;
+    participant: { id: number; name: string; phone_number: string | null; age: number | null } | null;
 };
 
 const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
@@ -36,7 +36,11 @@ export default function EvaluateSubmission({
             <div className="flex h-full flex-1 flex-col gap-6 p-4">
                 <div>
                     <h1 className="text-lg font-semibold">تقييم المشاركة</h1>
-                    <p className="text-muted-foreground text-sm">المشارك: {submission.participant?.name ?? '—'}</p>
+                    <div className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                        <p>المشارك: {submission.participant?.name ?? '—'}</p>
+                        <p>العمر: {submission.participant?.age ?? '—'}</p>
+                        <p>الهاتف: {submission.participant?.phone_number ?? '—'}</p>
+                    </div>
                 </div>
 
                 <div className="rounded-xl border border-sidebar-border/70 p-4 dark:border-sidebar-border">

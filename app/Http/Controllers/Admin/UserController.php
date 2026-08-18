@@ -32,6 +32,7 @@ class UserController extends Controller
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'age' => $validated['age'] ?? null,
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],
             'can_manage_judges' => $request->boolean('can_manage_judges'),
@@ -45,14 +46,14 @@ class UserController extends Controller
     public function edit(User $user): Response
     {
         return Inertia::render('admin/users/edit', [
-            'user' => $user->only(['id', 'name', 'email', 'role', 'can_manage_judges']),
+            'user' => $user->only(['id', 'name', 'email', 'age', 'role', 'can_manage_judges']),
         ]);
     }
 
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $user->update([
-            ...$request->safe()->only(['name', 'email', 'role']),
+            ...$request->safe()->only(['name', 'email', 'age', 'role']),
             'can_manage_judges' => $request->boolean('can_manage_judges'),
         ]);
 

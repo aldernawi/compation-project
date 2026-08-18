@@ -12,7 +12,7 @@ import type { BreadcrumbItem, LaravelPaginator } from '@/types';
 type ParticipantSubmission = {
     id: number;
     status: string;
-    participant: { id: number; name: string; email: string } | null;
+    participant: { id: number; name: string; email: string; phone_number: string | null; age: number | null } | null;
 };
 
 export default function ParticipantsIndex({
@@ -48,6 +48,8 @@ export default function ParticipantsIndex({
                     columns={[
                         { header: 'الاسم', cell: (s: ParticipantSubmission) => s.participant?.name ?? '—' },
                         { header: 'البريد الإلكتروني', cell: (s: ParticipantSubmission) => s.participant?.email ?? '—' },
+                        { header: 'الهاتف', cell: (s: ParticipantSubmission) => s.participant?.phone_number ?? '—' },
+                        { header: 'العمر', cell: (s: ParticipantSubmission) => s.participant?.age ?? '—' },
                         {
                             header: 'حالة المشاركة',
                             cell: (s: ParticipantSubmission) => <Badge variant="secondary">{translateSubmissionStatus(s.status)}</Badge>,

@@ -19,7 +19,10 @@ it('accepts a valid image file for an image competition', function () {
         ['file' => UploadedFile::fake()->image('entry.jpg')],
     );
 
-    $response->assertCreated();
+    $response->assertCreated()->assertJsonPath(
+        'data.media_url',
+        fn ($url) => str($url)->startsWith('/storage/'),
+    );
 });
 
 it('rejects a non-image file for an image competition', function () {

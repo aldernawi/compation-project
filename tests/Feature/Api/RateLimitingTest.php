@@ -16,6 +16,7 @@ it('throttles repeated registration attempts from the same ip', function () {
             'name' => 'Someone',
             'email' => "user{$i}@example.com",
             'phone_number' => '+15551234567',
+            'age' => 25,
             'password' => 'password',
             'password_confirmation' => 'password',
         ])->assertCreated();
@@ -25,6 +26,7 @@ it('throttles repeated registration attempts from the same ip', function () {
         'name' => 'Overflow',
         'email' => 'overflow@example.com',
         'phone_number' => '+15551234567',
+        'age' => 25,
         'password' => 'password',
         'password_confirmation' => 'password',
     ])->assertStatus(429);

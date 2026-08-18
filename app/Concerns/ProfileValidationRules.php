@@ -18,6 +18,7 @@ trait ProfileValidationRules
         return [
             'name' => $this->nameRules(),
             'email' => $this->emailRules($userId),
+            'age' => ['required', 'integer', 'between:5,120'],
         ];
     }
 

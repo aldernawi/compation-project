@@ -22,6 +22,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $name
  * @property string $email
  * @property string|null $phone_number
+ * @property int|null $age
  * @property Role $role
  * @property bool $can_manage_judges
  * @property Carbon|null $email_verified_at
@@ -33,7 +34,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'phone_number', 'password', 'role', 'can_manage_judges', 'fcm_token', 'suspended_at'])]
+#[Fillable(['name', 'email', 'phone_number', 'age', 'password', 'role', 'can_manage_judges', 'fcm_token', 'suspended_at'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements PasskeyUser
 {

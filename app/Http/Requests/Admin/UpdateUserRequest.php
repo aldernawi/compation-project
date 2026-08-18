@@ -26,6 +26,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
+            'age' => ['nullable', 'integer', 'between:5,120'],
             'role' => ['required', new Enum(Role::class)],
             'can_manage_judges' => ['boolean'],
         ];

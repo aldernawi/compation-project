@@ -11,6 +11,7 @@ type AdminUser = {
     id: number;
     name: string;
     email: string;
+    age: number | null;
     role: 'admin' | 'organizer' | 'judge' | 'participant';
     suspended_at: string | null;
 };
@@ -31,6 +32,7 @@ export default function UsersIndex({ users }: { users: LaravelPaginator<AdminUse
                     columns={[
                         { header: 'الاسم', cell: (user: AdminUser) => user.name },
                         { header: 'البريد الإلكتروني', cell: (user: AdminUser) => user.email },
+                        { header: 'العمر', cell: (user: AdminUser) => user.age ?? '—' },
                         {
                             header: 'الدور',
                             cell: (user: AdminUser) => <Badge variant="secondary">{translateUserRole(user.role)}</Badge>,

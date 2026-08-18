@@ -13,6 +13,7 @@ type EditableUser = {
     id: number;
     name: string;
     email: string;
+    age: number | null;
     role: 'admin' | 'organizer' | 'judge' | 'participant';
     can_manage_judges: boolean;
 };
@@ -37,6 +38,12 @@ export default function EditUser({ user }: { user: EditableUser }) {
                                 <Label htmlFor="email">البريد الإلكتروني</Label>
                                 <Input id="email" type="email" name="email" defaultValue={user.email} required autoComplete="email" />
                                 <InputError message={errors.email} />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="age">العمر</Label>
+                                <Input id="age" type="number" name="age" defaultValue={user.age ?? ''} min={5} max={120} />
+                                <InputError message={errors.age} />
                             </div>
 
                             <div className="grid gap-2">

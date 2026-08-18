@@ -32,6 +32,12 @@ export default function CreateUser() {
                             </div>
 
                             <div className="grid gap-2">
+                                <Label htmlFor="age">العمر</Label>
+                                <Input id="age" type="number" name="age" min={5} max={120} />
+                                <InputError message={errors.age} />
+                            </div>
+
+                            <div className="grid gap-2">
                                 <Label htmlFor="password">كلمة المرور</Label>
                                 <Input id="password" type="password" name="password" required autoComplete="new-password" />
                                 <InputError message={errors.password} />

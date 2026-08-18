@@ -22,6 +22,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _ageController = TextEditingController();
 
   final _passwordFormKey = GlobalKey<FormState>();
   final _currentPasswordController = TextEditingController();
@@ -33,6 +34,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _ageController.dispose();
     _currentPasswordController.dispose();
     _newPasswordController.dispose();
     _confirmPasswordController.dispose();
@@ -45,6 +47,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       _nameController.text = user.name;
       _emailController.text = user.email;
       _phoneController.text = user.phoneNumber ?? '';
+      _ageController.text = user.age?.toString() ?? '';
     }
     setState(() => _editing = true);
   }
@@ -56,6 +59,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           name: _nameController.text.trim(),
           email: _emailController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
+          age: int.parse(_ageController.text.trim()),
         );
 
     if (success && mounted) {
@@ -99,7 +103,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         title: const Text('تسجيل الخروج'),
         content: const Text('هل أنت متأكد من تسجيل الخروج؟'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('إلغاء')),
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('إلغاء')),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             child: const Text('خروج', style: TextStyle(color: AppColors.error)),
@@ -152,7 +158,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              user.name.isNotEmpty ? user.name[0].toUpperCase() : '?',
+                              user.name.isNotEmpty
+                                  ? user.name[0].toUpperCase()
+                                  : '?',
                               style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
@@ -172,7 +180,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         const SizedBox(height: 4),
                         Text(
                           user.email,
-                          style: const TextStyle(color: AppColors.textSecondary),
+                          style:
+                              const TextStyle(color: AppColors.textSecondary),
                         ),
                       ],
                     ),
@@ -202,9 +211,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           keyboardType: TextInputType.emailAddress,
                           validator: (v) {
                             if (v == null || v.isEmpty) return 'البريد مطلوب';
-                            if (!RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(v)) {
+                            if (!RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$')
+                                .hasMatch(v)) {
                               return 'بريد غير صحيح';
                             }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        AppTextField(
+                          label: 'العمر',
+                          controller: _ageController,
+                          keyboardType: TextInputType.number,
+                          validator: (v) {
+                            final age = int.tryParse(v ?? '');
+                            if (age == null || age < 5 || age > 120)
+                              return 'أدخل عمرًا بين 5 و120';
                             return null;
                           },
                         ),
@@ -214,7 +236,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           controller: _phoneController,
                           keyboardType: TextInputType.phone,
                           validator: (v) {
-                            if (v == null || v.isEmpty) return 'رقم الهاتف مطلوب';
+                            if (v == null || v.isEmpty)
+                              return 'رقم الهاتف مطلوب';
                             return null;
                           },
                         ),
@@ -232,7 +255,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           children: [
                             Expanded(
                               child: OutlinedButton(
-                                onPressed: () => setState(() => _editing = false),
+                                onPressed: () =>
+                                    setState(() => _editing = false),
                                 child: const Text('إلغاء'),
                               ),
                             ),
@@ -240,7 +264,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             Expanded(
                               child: AppButton(
                                 label: 'حفظ',
-                                loading: profileState.status == ProfileStatus.loading,
+                                loading: profileState.status ==
+                                    ProfileStatus.loading,
                                 onPressed: _saveProfile,
                               ),
                             ),
@@ -260,7 +285,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           controller: _currentPasswordController,
                           obscureText: true,
                           validator: (v) {
-                            if (v == null || v.isEmpty) return 'كلمة المرور الحالية مطلوبة';
+                            if (v == null || v.isEmpty)
+                              return 'كلمة المرور الحالية مطلوبة';
                             return null;
                           },
                         ),
@@ -270,8 +296,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           controller: _newPasswordController,
                           obscureText: true,
                           validator: (v) {
-                            if (v == null || v.isEmpty) return 'كلمة المرور الجديدة مطلوبة';
-                            if (v.length < 8) return 'يجب أن تكون 8 أحرف على الأقل';
+                            if (v == null || v.isEmpty)
+                              return 'كلمة المرور الجديدة مطلوبة';
+                            if (v.length < 8)
+                              return 'يجب أن تكون 8 أحرف على الأقل';
                             return null;
                           },
                         ),
@@ -282,7 +310,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           obscureText: true,
                           validator: (v) {
                             if (v == null || v.isEmpty) return 'التأكيد مطلوب';
-                            if (v != _newPasswordController.text) return 'كلمتا المرور غير متطابقتين';
+                            if (v != _newPasswordController.text)
+                              return 'كلمتا المرور غير متطابقتين';
                             return null;
                           },
                         ),
@@ -313,7 +342,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             Expanded(
                               child: AppButton(
                                 label: 'حفظ',
-                                loading: profileState.status == ProfileStatus.loading,
+                                loading: profileState.status ==
+                                    ProfileStatus.loading,
                                 onPressed: _savePassword,
                               ),
                             ),
@@ -324,8 +354,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                 ] else ...[
                   _infoCard(Icons.person_outline, 'الاسم', user.name),
-                  _infoCard(Icons.email_outlined, 'البريد الإلكتروني', user.email),
-                  _infoCard(Icons.phone_outlined, 'رقم الهاتف', user.phoneNumber ?? 'غير محدد'),
+                  _infoCard(
+                      Icons.email_outlined, 'البريد الإلكتروني', user.email),
+                  _infoCard(Icons.cake_outlined, 'العمر',
+                      user.age?.toString() ?? 'غير محدد'),
+                  _infoCard(Icons.phone_outlined, 'رقم الهاتف',
+                      user.phoneNumber ?? 'غير محدد'),
                   const SizedBox(height: 16),
                   OutlinedButton.icon(
                     onPressed: () => setState(() => _changingPassword = true),
@@ -342,7 +376,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   OutlinedButton.icon(
                     onPressed: _logout,
                     icon: const Icon(Icons.logout, color: AppColors.error),
-                    label: const Text('تسجيل الخروج', style: TextStyle(color: AppColors.error)),
+                    label: const Text('تسجيل الخروج',
+                        style: TextStyle(color: AppColors.error)),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.error,
                       side: const BorderSide(color: AppColors.error),
@@ -368,11 +403,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                  style: const TextStyle(
+                      color: AppColors.textSecondary, fontSize: 13),
                 ),
                 Text(
                   value,
-                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 15),
                 ),
               ],
             ),

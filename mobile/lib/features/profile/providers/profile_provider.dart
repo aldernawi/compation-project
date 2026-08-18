@@ -30,6 +30,7 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
     required String name,
     required String email,
     required String phoneNumber,
+    required int age,
   }) async {
     state = ProfileState(status: ProfileStatus.loading);
 
@@ -38,14 +39,17 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
         'name': name,
         'email': email,
         'phone_number': phoneNumber,
+        'age': age,
       });
-      final user = UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
+      final user =
+          UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
       _authNotifier.updateUser(user);
       state = ProfileState(status: ProfileStatus.success);
       return true;
     } on DioException catch (e) {
       final errors = e.response?.data?['errors'] as Map<String, dynamic>?;
-      final message = errors?.values.first?.first as String? ?? 'حدث خطأ أثناء التحديث';
+      final message =
+          errors?.values.first?.first as String? ?? 'حدث خطأ أثناء التحديث';
       state = ProfileState(status: ProfileStatus.error, error: message);
       return false;
     }
@@ -68,7 +72,8 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
       return true;
     } on DioException catch (e) {
       final errors = e.response?.data?['errors'] as Map<String, dynamic>?;
-      final message = errors?.values.first?.first as String? ?? 'حدث خطأ أثناء تغيير كلمة المرور';
+      final message = errors?.values.first?.first as String? ??
+          'حدث خطأ أثناء تغيير كلمة المرور';
       state = ProfileState(status: ProfileStatus.error, error: message);
       return false;
     }
@@ -79,6 +84,8 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   }
 }
 
-final profileProvider = StateNotifierProvider<ProfileNotifier, ProfileState>((ref) {
-  return ProfileNotifier(ref.watch(dioProvider), ref.watch(authProvider.notifier));
+final profileProvider =
+    StateNotifierProvider<ProfileNotifier, ProfileState>((ref) {
+  return ProfileNotifier(
+      ref.watch(dioProvider), ref.watch(authProvider.notifier));
 });

@@ -20,6 +20,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'phone_number' => ['required', 'string', 'max:32'],
+            'age' => ['required', 'integer', 'between:5,120'],
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
@@ -27,6 +28,7 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone_number' => $validated['phone_number'],
+            'age' => $validated['age'],
             'password' => Hash::make($validated['password']),
             'role' => Role::Participant,
         ]);

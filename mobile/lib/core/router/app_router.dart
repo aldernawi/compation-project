@@ -22,10 +22,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/splash',
     routes: [
       GoRoute(path: '/splash', builder: (_, __) => const SplashScreen()),
-      GoRoute(path: '/onboarding', builder: (_, __) => const OnboardingScreen()),
+      GoRoute(
+          path: '/onboarding', builder: (_, __) => const OnboardingScreen()),
       GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
       GoRoute(path: '/register', builder: (_, __) => const RegisterScreen()),
-      GoRoute(path: '/forgot-password', builder: (_, __) => const ForgotPasswordScreen()),
+      GoRoute(
+          path: '/forgot-password',
+          builder: (_, __) => const ForgotPasswordScreen()),
       ShellRoute(
         builder: (context, state, child) {
           final location = state.matchedLocation;
@@ -34,7 +37,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         },
         routes: [
           GoRoute(path: '/home', builder: (_, __) => const HomeScreen()),
-          GoRoute(path: '/competitions', builder: (_, __) => const CompetitionListScreen()),
+          GoRoute(
+              path: '/competitions',
+              builder: (_, __) => const CompetitionListScreen()),
           GoRoute(
             path: '/competitions/:id',
             builder: (_, state) => CompetitionDetailScreen(
@@ -47,14 +52,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               competitionId: int.parse(state.pathParameters['id']!),
             ),
           ),
-          GoRoute(path: '/my-submissions', builder: (_, __) => const MySubmissionsScreen()),
+          GoRoute(
+              path: '/my-submissions',
+              builder: (_, __) => const MySubmissionsScreen()),
           GoRoute(
             path: '/submissions/:id',
             builder: (_, state) => SubmissionDetailScreen(
               id: int.parse(state.pathParameters['id']!),
             ),
           ),
-          GoRoute(path: '/notifications', builder: (_, __) => const NotificationsScreen()),
+          GoRoute(
+              path: '/notifications',
+              builder: (_, __) => const NotificationsScreen()),
           GoRoute(path: '/profile', builder: (_, __) => const ProfileScreen()),
         ],
       ),
@@ -63,7 +72,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final authState = ref.read(authProvider);
       final status = authState.status;
       final location = state.matchedLocation;
-      final publicRoutes = ['/splash', '/onboarding', '/login', '/register', '/forgot-password'];
+      final publicRoutes = [
+        '/splash',
+        '/onboarding',
+        '/login',
+        '/register',
+        '/forgot-password'
+      ];
       final isPublic = publicRoutes.contains(location);
 
       if (status == AuthStatus.initial && !isPublic) {
@@ -72,7 +87,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       if (status == AuthStatus.unauthenticated && !isPublic) {
         return '/login';
       }
-      if (status == AuthStatus.authenticated && isPublic && location != '/splash') {
+      if (status == AuthStatus.authenticated &&
+          isPublic &&
+          location != '/splash' &&
+          location != '/forgot-password') {
         return '/home';
       }
       return null;
@@ -84,7 +102,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 int _selectedIndex(String location) {
   if (location.startsWith('/home')) return 0;
   if (location.startsWith('/competitions')) return 1;
-  if (location.startsWith('/my-submissions') || location.startsWith('/submissions')) return 2;
+  if (location.startsWith('/my-submissions') ||
+      location.startsWith('/submissions')) return 2;
   if (location.startsWith('/notifications')) return 3;
   if (location.startsWith('/profile')) return 4;
   return 0;

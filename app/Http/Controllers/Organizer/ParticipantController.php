@@ -21,7 +21,7 @@ class ParticipantController extends Controller
             'competition' => $competition->only(['id', 'title']),
             'filters' => ['search' => $search],
             'submissions' => $competition->submissions()
-                ->with('participant:id,name,email')
+                ->with('participant:id,name,email,phone_number,age')
                 ->whereHas('participant', function ($query) use ($search) {
                     $query->when($search, fn ($query) => $query->where(function ($query) use ($search) {
                         $query->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%");
@@ -32,7 +32,7 @@ class ParticipantController extends Controller
                 ->through(fn (Submission $submission) => [
                     'id' => $submission->id,
                     'status' => $submission->status->value,
-                    'participant' => $submission->participant?->only(['id', 'name', 'email']),
+                    'participant' => $submission->participant?->only(['id', 'name', 'email', 'phone_number', 'age']),
                 ]),
         ]);
     }

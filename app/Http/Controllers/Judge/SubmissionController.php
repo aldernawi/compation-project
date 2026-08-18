@@ -25,7 +25,7 @@ class SubmissionController extends Controller
             'competition' => $competition->only(['id', 'title']),
             'submissions' => $competition->submissions()
                 ->where('status', SubmissionStatus::Accepted)
-                ->with(['participant:id,name', 'evaluations' => fn ($query) => $query->where('judge_id', $judgeId)])
+                ->with(['participant:id,name,phone_number,age', 'evaluations' => fn ($query) => $query->where('judge_id', $judgeId)])
                 ->latest()
                 ->paginate(15)
                 ->through(fn (Submission $submission) => [
@@ -40,6 +40,8 @@ class SubmissionController extends Controller
     {
         abort_unless($this->isAssigned($request, $submission->competition), 403);
 
+        $submission->loadMissing('participant:id,name,phone_number,age');
+
         $existing = $submission->evaluations()->where('judge_id', $request->user()->id)->first();
 
         return Inertia::render('judge/submissions/evaluate', [
@@ -48,7 +50,7 @@ class SubmissionController extends Controller
                 'text_content' => $submission->text_content,
                 'link_url' => $submission->link_url,
                 'media_url' => $submission->getFirstMediaUrl('submission_files') ?: null,
-                'participant' => $submission->participant?->only(['id', 'name']),
+                'participant' => $submission->participant?->only(['id', 'name', 'phone_number', 'age']),
             ],
             'evaluation' => $existing?->only(['score', 'notes', 'status']),
         ]);

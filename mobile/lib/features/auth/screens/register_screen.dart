@@ -18,6 +18,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _ageController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordConfirmationController = TextEditingController();
   bool _obscurePassword = true;
@@ -27,6 +28,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _ageController.dispose();
     _passwordController.dispose();
     _passwordConfirmationController.dispose();
     super.dispose();
@@ -39,6 +41,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           name: _nameController.text.trim(),
           email: _emailController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
+          age: int.parse(_ageController.text.trim()),
           password: _passwordController.text,
           passwordConfirmation: _passwordConfirmationController.text,
         );
@@ -91,7 +94,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   validator: (v) {
-                    if (v == null || v.isEmpty) return 'البريد الإلكتروني مطلوب';
+                    if (v == null || v.isEmpty)
+                      return 'البريد الإلكتروني مطلوب';
                     if (!RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(v)) {
                       return 'البريد الإلكتروني غير صحيح';
                     }
@@ -111,16 +115,33 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 ),
                 const SizedBox(height: 16),
                 AppTextField(
+                  label: 'العمر',
+                  hint: 'مثال: 22',
+                  controller: _ageController,
+                  keyboardType: TextInputType.number,
+                  validator: (v) {
+                    final age = int.tryParse(v ?? '');
+                    if (age == null || age < 5 || age > 120)
+                      return 'أدخل عمرًا بين 5 و120';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                AppTextField(
                   label: 'كلمة المرور',
                   controller: _passwordController,
                   obscureText: _obscurePassword,
                   suffixIcon: IconButton(
-                    icon: Icon(_obscurePassword ? Icons.visibility : Icons.visibility_off),
-                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                    icon: Icon(_obscurePassword
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: () =>
+                        setState(() => _obscurePassword = !_obscurePassword),
                   ),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'كلمة المرور مطلوبة';
-                    if (v.length < 8) return 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+                    if (v.length < 8)
+                      return 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
                     return null;
                   },
                 ),
@@ -130,8 +151,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   controller: _passwordConfirmationController,
                   obscureText: true,
                   validator: (v) {
-                    if (v == null || v.isEmpty) return 'تأكيد كلمة المرور مطلوب';
-                    if (v != _passwordController.text) return 'كلمتا المرور غير متطابقتين';
+                    if (v == null || v.isEmpty)
+                      return 'تأكيد كلمة المرور مطلوب';
+                    if (v != _passwordController.text)
+                      return 'كلمتا المرور غير متطابقتين';
                     return null;
                   },
                 ),
@@ -141,7 +164,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     child: Text(
                       authState.error!,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: AppColors.error, fontSize: 14),
+                      style:
+                          const TextStyle(color: AppColors.error, fontSize: 14),
                     ),
                   ),
                 const SizedBox(height: 24),

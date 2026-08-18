@@ -26,6 +26,7 @@ it('creates a user with a given role', function () {
     $response = $this->actingAs($this->admin)->post('/admin/users', [
         'name' => 'New Organizer',
         'email' => 'organizer@example.com',
+        'age' => 30,
         'password' => 'password',
         'password_confirmation' => 'password',
         'role' => 'organizer',
@@ -43,6 +44,7 @@ it('updates a user', function () {
     $response = $this->actingAs($this->admin)->put("/admin/users/{$user->id}", [
         'name' => 'Updated Name',
         'email' => $user->email,
+        'age' => 30,
         'role' => 'judge',
     ]);
 
@@ -58,6 +60,7 @@ it('grants an organizer permission to manage judges', function () {
     $response = $this->actingAs($this->admin)->put("/admin/users/{$organizer->id}", [
         'name' => $organizer->name,
         'email' => $organizer->email,
+        'age' => 30,
         'role' => 'organizer',
         'can_manage_judges' => true,
     ]);

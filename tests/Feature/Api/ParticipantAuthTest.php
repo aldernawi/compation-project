@@ -8,21 +8,24 @@ it('registers a participant with a phone number and returns a token', function (
         'name' => 'Jane Doe',
         'email' => 'jane@example.com',
         'phone_number' => '+15551234567',
+        'age' => 25,
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
 
-    $response->assertCreated()->assertJsonStructure(['token', 'user' => ['id', 'name', 'email', 'phone_number', 'role']]);
+    $response->assertCreated()->assertJsonStructure(['token', 'user' => ['id', 'name', 'email', 'phone_number', 'age', 'role']]);
 
     $user = User::where('email', 'jane@example.com')->firstOrFail();
     expect($user->role)->toBe(Role::Participant)
-        ->and($user->phone_number)->toBe('+15551234567');
+        ->and($user->phone_number)->toBe('+15551234567')
+        ->and($user->age)->toBe(25);
 });
 
 it('rejects registration missing a phone number', function () {
     $this->postJson('/api/register', [
         'name' => 'Jane Doe',
         'email' => 'jane@example.com',
+        'age' => 25,
         'password' => 'password',
         'password_confirmation' => 'password',
     ])->assertUnprocessable();

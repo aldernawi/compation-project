@@ -21,6 +21,7 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'age' => ['nullable', 'integer', 'between:5,120'],
             'password' => ['required', 'confirmed', 'min:8'],
             'role' => ['required', new Enum(Role::class)],
             'can_manage_judges' => ['boolean'],

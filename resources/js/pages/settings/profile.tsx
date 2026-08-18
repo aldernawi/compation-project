@@ -26,7 +26,7 @@ export default function Profile() {
                 <Heading
                     variant="small"
                     title="الملف الشخصي"
-                    description="حدّث اسمك وبريدك الإلكتروني"
+                    description="حدّث اسمك وبريدك الإلكتروني وعمرك"
                 />
 
                 <Form
@@ -74,6 +74,26 @@ export default function Profile() {
                                 <InputError
                                     className="mt-2"
                                     message={errors.email}
+                                />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="age">العمر</Label>
+
+                                <Input
+                                    id="age"
+                                    type="number"
+                                    className="mt-1 block w-full"
+                                    defaultValue={auth.user.age ?? ''}
+                                    name="age"
+                                    min={5}
+                                    max={120}
+                                    required
+                                />
+
+                                <InputError
+                                    className="mt-2"
+                                    message={errors.age}
                                 />
                             </div>
 

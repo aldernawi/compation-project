@@ -51,7 +51,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
     try {
       final response = await _dio.get('/user');
-      final user = UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
+      final user =
+          UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
       state = AuthState(status: AuthStatus.authenticated, user: user);
     } catch (_) {
       await TokenService.clearToken();
@@ -71,7 +72,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = AuthState(status: AuthStatus.authenticated, user: auth.user);
       return true;
     } on DioException catch (e) {
-      final message = e.response?.data?['message'] as String? ?? 'حدث خطأ أثناء تسجيل الدخول';
+      final message = e.response?.data?['message'] as String? ??
+          'حدث خطأ أثناء تسجيل الدخول';
       state = AuthState(status: AuthStatus.unauthenticated, error: message);
       return false;
     }
@@ -81,6 +83,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String name,
     required String email,
     required String phoneNumber,
+    required int age,
     required String password,
     required String passwordConfirmation,
   }) async {
@@ -90,6 +93,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         'name': name,
         'email': email,
         'phone_number': phoneNumber,
+        'age': age,
         'password': password,
         'password_confirmation': passwordConfirmation,
       });
@@ -99,7 +103,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       return true;
     } on DioException catch (e) {
       final errors = e.response?.data?['errors'] as Map<String, dynamic>?;
-      final message = errors?.values.first?.first as String? ?? 'حدث خطأ أثناء التسجيل';
+      final message =
+          errors?.values.first?.first as String? ?? 'حدث خطأ أثناء التسجيل';
       state = AuthState(status: AuthStatus.unauthenticated, error: message);
       return false;
     }
@@ -114,14 +119,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<bool> forgotPassword(String email) async {
-    state = const AuthState(loading: true);
+    state = state.copyWith(loading: true, error: null);
     try {
       await _dio.post('/forgot-password', data: {'email': email});
-      state = const AuthState(status: AuthStatus.unauthenticated);
+      state = state.copyWith(loading: false, error: null);
       return true;
     } on DioException catch (e) {
       final message = e.response?.data?['message'] as String? ?? 'حدث خطأ';
-      state = AuthState(status: AuthStatus.unauthenticated, error: message);
+      state = state.copyWith(loading: false, error: message);
       return false;
     }
   }
